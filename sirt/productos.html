@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIRT — Productos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <link rel="stylesheet" href="sirt.css" />
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="img/LOGO.jpeg" alt="SIRT Logo" style="height:42px; width:42px; object-fit:cover; border-radius:50%;" />
+    </a>
+    <button class="nav-toggle" id="nav-toggle"><i class="ti ti-menu-2"></i></button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="productos.html" class="active">Productos</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="soporte.html" class="btn-soporte"><i class="ti ti-ticket"></i> Soporte IT</a>
+      <a href="contacto.html" class="btn-contacto">Contacto <i class="ti ti-arrow-right"></i></a>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE BANNER -->
+<section class="page-banner">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Inicio</a>
+      <i class="ti ti-chevron-right" style="font-size:12px;"></i>
+      <span>Productos</span>
+    </div>
+    <span class="pb-tag"><i class="ti ti-package"></i> Nuestro catálogo</span>
+    <h1>Productos</h1>
+    <p>Ofrecemos equipos de las marcas líderes del mercado en seguridad, redes y herramientas de infraestructura tecnológica. Todo con garantía y soporte técnico especializado.</p>
+  </div>
+</section>
+
+<!-- PRODUCTS WITH FILTER -->
+<section class="section">
+  <div class="container">
+    <div class="sec-head">
+      <span class="sec-label"><i class="ti ti-package"></i> Catálogo de productos</span>
+      <h2 class="sec-title">Equipos y Herramientas</h2>
+      <p class="sec-sub">Selecciona una categoría para filtrar los productos disponibles en nuestro catálogo.</p>
+    </div>
+
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">Todos</button>
+      <button class="filter-btn" data-filter="seguridad">Seguridad</button>
+      <button class="filter-btn" data-filter="redes">Redes</button>
+      <button class="filter-btn" data-filter="herramientas">Herramientas</button>
+    </div>
+
+    <div class="products-grid" id="products-grid">
+
+      <!-- SEGURIDAD -->
+      <div class="product-card" data-cat="seguridad">
+        <div class="product-img">
+          <img src="https://assets.hikvision.com/prd/public/all/image/m000007714/2CD3041G0-%E7%AD%92%E6%9C%BA39-%E5%9F%BA%E7%BA%BF-%E5%B8%A6%E6%94%AF%E6%9E%B6-%E5%8F%B3%E4%BE%A7.png?eo-img.format=webp" alt="Cámara IP Hikvision DS-2CD" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Seguridad</div>
+          <div class="product-name">Cámara IP Hikvision </div>
+          <p class="product-desc">Cámara IP de alta definición con visión nocturna, detección de movimiento y acceso remoto. Resolución 2MP con compresión H.265+.</p>
+          <span class="product-tag">Hikvision</span>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="seguridad">
+        <div class="product-img">
+          <img src="https://assets.hikvision.com/prd/normal/all/image/m000183214/MB-0235-P.png?eo-img.format=webp" alt="DVR 8 Canales" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Seguridad</div>
+          <div class="product-name">DVR 8 Canales</div>
+          <p class="product-desc">Grabador de video digital para 8 cámaras analógicas o IP con almacenamiento en disco duro y acceso remoto desde app móvil.</p>
+          <span class="product-tag">Hikvision</span>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="seguridad">
+        <div class="product-img">
+          <img src="https://media.mundoextintor.com/category/deteccion-y-alarma-1024x1024.jpg?width=1200" alt="Kit Alarma" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Seguridad</div>
+          <div class="product-name">Kit Alarma</div>
+          <p class="product-desc">Kit completo de alarma con panel central, sensores de movimiento PIR, sirena y teclado numérico. Compatible con monitoreo remoto 24/7.</p>
+          <span class="product-tag">Seguridad</span>
+        </div>
+      </div>
+
+      <!-- REDES -->
+      <div class="product-card" data-cat="redes">
+        <div class="product-img">
+          <img src="https://www.digicorp.com.bo/_next/image?url=https%3A%2F%2Fimages-digicorp.nyc3.cdn.digitaloceanspaces.com%2FfilesDigicorp%2FBO%2Fimg%2Flarge%2FCRS32624G2SRM-image-1.webp&w=1080&q=75" alt="Router MikroTik RB750" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Redes</div>
+          <div class="product-name">CLOUD ROUTER SWITCH 24 ETH GIGABIT 2SFP+</div>
+          <p class="product-desc">CLOUD ROUTER SWITCH 24 PUERTOS GIGABIT 2 PUERTOS SFP+ 1SERIAL PORT DUAL BOOT SwOS/ROUTEROS CPU 800MHZ RAM 512MB RACKEABLEABLE LIC.5</p>
+          <span class="product-tag">MikroTik</span>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="redes">
+        <div class="product-img">
+          <img src="https://www.digicorp.com.bo/_next/image?url=https%3A%2F%2Fimages-digicorp.nyc3.cdn.digitaloceanspaces.com%2FfilesDigicorp%2FBO%2Fimg%2Flarge%2FUBUSWPRO1718289026637.webp&w=1080&q=75" alt="Switch 24 Puertos" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Redes</div>
+          <div class="product-name">SWITCH UNIFI PRO 24 POE*16 PUERTOS POE+</div>
+          <p class="product-desc">SWITCH UNIFI PRO 24 POE 16 PUERTOS GIGA POE+  8 PUERTOS GIGAS POE+++2 PUERTOS SFP+ CAPA 3 PATALLA TACTIL 1,3" POTENCIA MAX 400W</p>
+          <span class="product-tag">Redes</span>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="redes">
+        <div class="product-img">
+          <img src="https://www.digicorp.com.bo/_next/image?url=https%3A%2F%2Fimages-digicorp.nyc3.cdn.digitaloceanspaces.com%2FfilesDigicorp%2FBO%2Fimg%2Flarge%2FUBU7PRO-image-0-1728942458776.webp&w=1080&q=75" alt="Access Point Ubiquiti" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Redes</div>
+          <div class="product-name">ACCESS POINT WIFI 7 UNIFI PRO</div>
+          <p class="product-desc">ACCESS POINT WIFI 7 PRO FREC.2.4/5/6 GHZ SEMI/INTERIOR(IP 54) FULL DUPLEX 802.3AT 8 SSID X RADIO (SIN INYECTOR POE)300 USUARIOS</p>
+          <span class="product-tag">Ubiquiti</span>
+        </div>
+      </div>
+
+      <!-- HERRAMIENTAS -->
+      <div class="product-card" data-cat="herramientas">
+        <div class="product-img">
+          <img src="https://www.digicorp.com.bo/_next/image?url=https%3A%2F%2Fimages-digicorp.nyc3.cdn.digitaloceanspaces.com%2FfilesDigicorp%2FBO%2Fimg%2Flarge%2FU1717711053928.webp&w=1080&q=75" alt="Tester de Cables" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Herramientas</div>
+          <div class="product-name">Tester de Cables</div>
+          <p class="product-desc">Probador profesional de cables de red RJ45 y RJ11. Detecta cableado cruzado, cortocircuitos y pines abiertos para certificación de instalaciones.</p>
+          <span class="product-tag">Herramienta</span>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="herramientas">
+        <div class="product-img">
+          <img src="https://m.media-amazon.com/images/I/61WJUnIzUzL.jpg" alt="Kit Crimpeadora" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Herramientas</div>
+          <div class="product-name">Kit Crimpeadora</div>
+          <p class="product-desc">Kit completo de crimpeadora profesional para conectores RJ45/RJ11 con pelacables, cortador y 100 conectores Cat6 incluidos.</p>
+          <span class="product-tag">Herramienta</span>
+        </div>
+      </div>
+
+      <div class="product-card" data-cat="herramientas">
+        <div class="product-img">
+          <img src="https://www.digicorp.com.bo/_next/image?url=https%3A%2F%2Fimages-digicorp.nyc3.cdn.digitaloceanspaces.com%2FfilesDigicorp%2FBO%2Fimg%2Flarge%2FU1717775540623.webp&w=1080&q=75" alt="Multímetro Digital" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        </div>
+        <div class="product-body">
+          <div class="product-cat">Herramientas</div>
+          <div class="product-name">Multímetro Digital</div>
+          <p class="product-desc">Multímetro digital profesional con medición de voltaje AC/DC, corriente, resistencia y continuidad. Indispensable para diagnóstico eléctrico.</p>
+          <span class="product-tag">Herramienta</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="cta-section" style="margin:0;">
+      <h2>¿Listo para modernizar tu infraestructura?</h2>
+      <p>Consulta disponibilidad y precios de cualquier producto. Nuestro equipo te asesorará en la mejor opción para tu proyecto.</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/59170297903" class="btn-primary" target="_blank"><i class="ti ti-brand-whatsapp"></i> Consultar por WhatsApp</a>
+        <a href="mailto:info@sirtsc.com" class="btn-outline"><i class="ti ti-mail"></i> info@sirtsc.com</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="nav-logo" style="margin-bottom:4px">
+          <img src="img/LOGO.jpeg" alt="SIRT Logo" style="height:42px; width:42px; object-fit:cover; border-radius:50%;" />
+        </a>
+        <p class="footer-brand-desc">Redes y Telecomunicaciones. Soluciones de conectividad e infraestructura tecnológica en Bolivia.</p>
+        <div class="social-links">
+          <a href="https://facebook.com/SirtBoliviasc" class="social-btn" target="_blank"><i class="ti ti-brand-facebook"></i></a>
+          <a href="https://instagram.com/sirtbosc" class="social-btn" target="_blank"><i class="ti ti-brand-instagram"></i></a>
+          <a href="https://wa.me/59170297903" class="social-btn" target="_blank"><i class="ti ti-brand-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="productos.html">Productos</a>
+        <a href="clientes.html">Clientes</a>
+        <a href="soporte.html">Soporte IT</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <a href="servicios.html">Cableado Estructurado</a>
+        <a href="servicios.html">Sistemas de Seguridad</a>
+        <a href="servicios.html">Soluciones TI</a>
+        <a href="servicios.html">Enlace Inalámbrico</a>
+        <a href="servicios.html">Centros de Datos</a>
+        <a href="soporte.html">Soporte IT</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <p><i class="ti ti-map-pin"></i> Radial 17½ / 5to Anillo<br>Jardín Latino, Santa Cruz</p>
+        <a href="tel:79822006"><i class="ti ti-phone"></i> 79822006</a>
+        <a href="https://wa.me/59170297903"><i class="ti ti-brand-whatsapp"></i> 70297903</a>
+        <a href="mailto:info@sirtsc.com"><i class="ti ti-mail"></i> info@sirtsc.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SIRT — Redes y Telecomunicaciones. Todos los derechos reservados.</span>
+      <span>Santa Cruz, Bolivia</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('nav-toggle').addEventListener('click', function() {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+
+  // Product filter
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const productCards = document.querySelectorAll('.product-card');
+
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+
+      var filter = btn.getAttribute('data-filter');
+      productCards.forEach(function(card) {
+        if (filter === 'all' || card.getAttribute('data-cat') === filter) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

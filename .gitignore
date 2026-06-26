@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE (opcional - quita esta línea si quieres compartir config de VSCode)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Supabase local
+supabase/.temp/
+supabase/.branches/
+
+# Variables de entorno (por si en el futuro usas un build tool)
+.env
+.env.local
+.env.*.local

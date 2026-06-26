@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SoporteIT — Acceso Administrador</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body class="landing-body">
+
+  <div class="login-card">
+    <div class="login-logo">
+      <i class="ti ti-bolt"></i> SoporteIT
+    </div>
+    <div class="login-subtitle">Dashboard Admin — Solo personal autorizado</div>
+
+    <!-- Banner de bloqueo -->
+    <div id="lock-banner" class="alert-error" style="display:none">
+      <i class="ti ti-lock" style="flex-shrink:0;font-size:20px;margin-top:2px"></i>
+      <div>
+        <strong>Acceso bloqueado por seguridad</strong><br>
+        Demasiados intentos fallidos. Vuelve a intentar en:<br>
+        <strong id="lock-countdown" style="font-size:18px;letter-spacing:1px"></strong>
+      </div>
+    </div>
+
+    <!-- Error de credenciales -->
+    <div id="error-msg" class="alert-error" style="display:none">
+      <i class="ti ti-alert-circle" style="flex-shrink:0"></i>
+      <span>Usuario o contraseña incorrectos.</span>
+    </div>
+
+    <div class="form-row">
+      <label class="form-label">Correo electrónico</label>
+      <input class="form-input" type="email" id="login-user"
+             placeholder="usuario@sirtsc.com" autocomplete="username"
+             onkeydown="if(event.key==='Enter') doLogin()" />
+    </div>
+
+    <div class="form-row">
+      <label class="form-label">Contraseña</label>
+      <div class="input-wrap">
+        <input class="form-input" type="password" id="login-pass"
+               placeholder="••••••••" autocomplete="current-password"
+               onkeydown="if(event.key==='Enter') doLogin()" />
+        <button class="eye-btn" type="button" onclick="togglePwd()">
+          <i class="ti ti-eye" id="eye-icon"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Advertencia de intentos restantes -->
+    <div id="attempts-warn" class="alert-warn" style="display:none"></div>
+
+    <button class="btn btn-primary btn-full" id="login-btn" onclick="doLogin()">
+      <i class="ti ti-login"></i> Ingresar
+    </button>
+
+    <a href="index.html" class="login-back">← Volver al inicio</a>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase.js"></script>
+  <script src="auth.js"></script>
+  <script>
+    const PORTAL = 'admin';
+
+    // Si ya tiene sesión activa de Supabase, redirigir directo
+    (async function() {
+      const { data } = await _sb.auth.getSession();
+      if (data.session) {
+        setAuth({ role: 'admin', email: data.session.user.email });
+        window.location.replace('admin.html');
+      }
+    })();
+
+    function togglePwd() {
+      const inp  = document.getElementById('login-pass');
+      const icon = document.getElementById('eye-icon');
+      inp.type   = inp.type === 'password' ? 'text' : 'password';
+      icon.className = inp.type === 'password' ? 'ti ti-eye' : 'ti ti-eye-off';
+    }
+
+    async function doLogin() {
+      const locked = checkLock(PORTAL);
+      if (locked) { showLockBanner(locked); return; }
+
+      const email = document.getElementById('login-user').value.trim();
+      const pass  = document.getElementById('login-pass').value;
+
+      if (!email || !pass) { return; }
+
+      const btn = document.getElementById('login-btn');
+      btn.disabled  = true;
+      btn.innerHTML = '<span class="spinner" style="display:inline-block;width:16px;height:16px;border-width:2px;vertical-align:middle;margin-right:6px"></span> Verificando...';
+
+      const { data, error } = await _sb.auth.signInWithPassword({ email, password: pass });
+
+      if (!error && data.session) {
+        resetLock(PORTAL);
+        setAuth({ role: 'admin', email: data.user.email });
+        window.location.replace('admin.html');
+      } else {
+        btn.disabled  = false;
+        btn.innerHTML = '<i class="ti ti-login"></i> Ingresar';
+        const d = registerFail(PORTAL);
+        showFailure(d);
+      }
+    }
+
+    function showFailure(d) {
+      document.getElementById('error-msg').style.display = 'flex';
+      document.getElementById('login-pass').value = '';
+      document.getElementById('login-pass').focus();
+
+      if (d.lockedUntil) {
+        showLockBanner(d.lockedUntil);
+      } else {
+        const rem  = MAX_ATTEMPTS - d.attempts;
+        const warn = document.getElementById('attempts-warn');
+        warn.style.display = 'flex';
+        warn.innerHTML = `<i class="ti ti-alert-triangle"></i>&nbsp;Te quedan <strong>&nbsp;${rem}&nbsp;</strong> intento${rem !== 1 ? 's' : ''} antes del bloqueo.`;
+      }
+    }
+
+    let _iv = null;
+
+    function showLockBanner(until) {
+      document.getElementById('lock-banner').style.display   = 'flex';
+      document.getElementById('error-msg').style.display     = 'none';
+      document.getElementById('attempts-warn').style.display = 'none';
+      document.getElementById('login-btn').disabled          = true;
+      document.getElementById('login-pass').disabled         = true;
+      document.getElementById('login-user').disabled         = true;
+
+      function tick() {
+        const ms = until - Date.now();
+        if (ms <= 0) {
+          clearInterval(_iv);
+          resetLock(PORTAL);
+          location.reload();
+          return;
+        }
+        const m = String(Math.floor(ms / 60000)).padStart(2, '0');
+        const s = String(Math.floor((ms % 60000) / 1000)).padStart(2, '0');
+        document.getElementById('lock-countdown').textContent = `${m}:${s}`;
+      }
+
+      tick();
+      _iv = setInterval(tick, 1000);
+    }
+
+    // Verificar bloqueo al cargar la página
+    const _initLock = checkLock(PORTAL);
+    if (_initLock) showLockBanner(_initLock);
+  </script>
+
+</body>
+</html>

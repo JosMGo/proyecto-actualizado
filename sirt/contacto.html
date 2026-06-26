@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIRT — Contacto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <link rel="stylesheet" href="sirt.css" />
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="img/LOGO.jpeg" alt="SIRT Logo" style="height:42px; width:42px; object-fit:cover; border-radius:50%;" />
+    </a>
+    <button class="nav-toggle" id="nav-toggle"><i class="ti ti-menu-2"></i></button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="productos.html">Productos</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="soporte.html" class="btn-soporte"><i class="ti ti-ticket"></i> Soporte IT</a>
+      <a href="contacto.html" class="btn-contacto">Contacto <i class="ti ti-arrow-right"></i></a>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE BANNER -->
+<section class="page-banner">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Inicio</a>
+      <i class="ti ti-chevron-right" style="font-size:12px;"></i>
+      <span>Contacto</span>
+    </div>
+    <span class="pb-tag"><i class="ti ti-message-circle"></i> Estamos aquí para ayudarte</span>
+    <h1>Contáctanos</h1>
+    <p>Escríbenos, llámanos o visítanos. Nuestro equipo está disponible para atender tus consultas, cotizaciones y proyectos tecnológicos en Bolivia.</p>
+  </div>
+</section>
+
+<!-- CONTACT GRID -->
+<section class="section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- LEFT: Contact Cards -->
+      <div class="contact-info">
+        <div class="contact-card">
+          <div class="cc-icon"><i class="ti ti-map-pin"></i></div>
+          <div>
+            <div class="cc-label">Dirección</div>
+            <div class="cc-value">Radial 17½ / 5to Anillo</div>
+            <div class="cc-sub">Jardín Latino, Santa Cruz de la Sierra, Bolivia</div>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="cc-icon"><i class="ti ti-phone"></i></div>
+          <div>
+            <div class="cc-label">Teléfono</div>
+            <div class="cc-value"><a href="tel:79822006" style="color:inherit;">79822006</a></div>
+            <div class="cc-sub">Lunes a Viernes, 8:00 — 18:00</div>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="cc-icon"><i class="ti ti-brand-whatsapp"></i></div>
+          <div>
+            <div class="cc-label">WhatsApp</div>
+            <div class="cc-value"><a href="https://wa.me/59170297903" target="_blank" style="color:inherit;">70297903</a></div>
+            <div class="cc-sub">Respuesta rápida en horario laboral</div>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="cc-icon"><i class="ti ti-mail"></i></div>
+          <div>
+            <div class="cc-label">Correo electrónico</div>
+            <div class="cc-value"><a href="mailto:info@sirtsc.com" style="color:inherit;">info@sirtsc.com</a></div>
+            <div class="cc-sub">Respondemos en menos de 24 horas</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Contact Form -->
+      <div class="contact-form">
+        <div class="cf-title">Envíanos un mensaje</div>
+        <form id="contact-form" onsubmit="handleFormSubmit(event)">
+          <div class="form-grid">
+            <div>
+              <label class="form-label" for="nombre">Nombre</label>
+              <input class="form-input" type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required />
+            </div>
+            <div>
+              <label class="form-label" for="empresa">Empresa</label>
+              <input class="form-input" type="text" id="empresa" name="empresa" placeholder="Nombre de tu empresa" />
+            </div>
+          </div>
+          <div class="form-grid">
+            <div>
+              <label class="form-label" for="email">Email</label>
+              <input class="form-input" type="email" id="email" name="email" placeholder="tu@email.com" required />
+            </div>
+            <div>
+              <label class="form-label" for="telefono">Teléfono</label>
+              <input class="form-input" type="tel" id="telefono" name="telefono" placeholder="Ej. 70000000" />
+            </div>
+          </div>
+          <div class="form-row">
+            <label class="form-label" for="servicio">Servicio de interés</label>
+            <select class="form-select" id="servicio" name="servicio">
+              <option value="" disabled selected>Selecciona un servicio</option>
+              <option value="cableado">Cableado Estructurado</option>
+              <option value="seguridad">Sistemas de Seguridad</option>
+              <option value="soluciones-ti">Soluciones TI</option>
+              <option value="enlace-inalambrico">Enlace Inalámbrico</option>
+              <option value="datacenter">Infraestructura de Centros de Datos</option>
+              <option value="soporte-it">Soporte IT</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label class="form-label" for="mensaje">Mensaje</label>
+            <textarea class="form-textarea" id="mensaje" name="mensaje" placeholder="Cuéntanos sobre tu proyecto o consulta..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary" style="width:100%; justify-content:center;">
+            <i class="ti ti-send"></i> Enviar mensaje
+          </button>
+        </form>
+        <div id="form-success" style="display:none; margin-top:20px; padding:16px; background:rgba(34,197,94,.1); border:1px solid rgba(34,197,94,.3); border-radius:10px; color:#22C55E; font-size:14px; font-weight:600; text-align:center;">
+          <i class="ti ti-circle-check"></i> ¡Mensaje enviado con éxito! Te contactaremos pronto.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MAP PLACEHOLDER -->
+<section class="section" style="padding-top:0;">
+  <div class="container">
+    <div style="
+      height:400px;
+      border-radius:var(--radius-lg);
+      background:linear-gradient(135deg, var(--card2) 0%, var(--navy2) 100%);
+      border:1px solid var(--border);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      position:relative;
+      overflow:hidden;
+    ">
+      <div style="
+        position:absolute; inset:0;
+        background:radial-gradient(ellipse at 50% 50%, rgba(22,183,204,.07) 0%, transparent 70%);
+      "></div>
+      <i class="ti ti-map-2" style="font-size:56px; color:rgba(22,183,204,.3); position:relative;"></i>
+      <div style="text-align:center; position:relative;">
+        <div style="font-size:16px; font-weight:700; color:var(--white); margin-bottom:6px;">Radial 17½ / 5to Anillo, Jardín Latino</div>
+        <div style="font-size:14px; color:var(--gray);">Santa Cruz de la Sierra, Bolivia</div>
+      </div>
+      <a href="https://maps.google.com/?q=Santa+Cruz+Bolivia+Radial+17+5to+Anillo" target="_blank" class="btn-outline" style="position:relative; margin-top:8px;">
+        <i class="ti ti-map-pin"></i> Ver en Google Maps
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="nav-logo" style="margin-bottom:4px">
+          <img src="img/LOGO.jpeg" alt="SIRT Logo" style="height:42px; width:42px; object-fit:cover; border-radius:50%;" />
+        </a>
+        <p class="footer-brand-desc">Redes y Telecomunicaciones. Soluciones de conectividad e infraestructura tecnológica en Bolivia.</p>
+        <div class="social-links">
+          <a href="https://facebook.com/SirtBoliviasc" class="social-btn" target="_blank"><i class="ti ti-brand-facebook"></i></a>
+          <a href="https://instagram.com/sirtbosc" class="social-btn" target="_blank"><i class="ti ti-brand-instagram"></i></a>
+          <a href="https://wa.me/59170297903" class="social-btn" target="_blank"><i class="ti ti-brand-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="productos.html">Productos</a>
+        <a href="clientes.html">Clientes</a>
+        <a href="soporte.html">Soporte IT</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <a href="servicios.html">Cableado Estructurado</a>
+        <a href="servicios.html">Sistemas de Seguridad</a>
+        <a href="servicios.html">Soluciones TI</a>
+        <a href="servicios.html">Enlace Inalámbrico</a>
+        <a href="servicios.html">Centros de Datos</a>
+        <a href="soporte.html">Soporte IT</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <p><i class="ti ti-map-pin"></i> Radial 17½ / 5to Anillo<br>Jardín Latino, Santa Cruz</p>
+        <a href="tel:79822006"><i class="ti ti-phone"></i> 79822006</a>
+        <a href="https://wa.me/59170297903"><i class="ti ti-brand-whatsapp"></i> 70297903</a>
+        <a href="mailto:info@sirtsc.com"><i class="ti ti-mail"></i> info@sirtsc.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 SIRT — Redes y Telecomunicaciones. Todos los derechos reservados.</span>
+      <span>Santa Cruz, Bolivia</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('nav-toggle').addEventListener('click', function() {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+
+  function handleFormSubmit(event) {
+    event.preventDefault();
+    document.getElementById('contact-form').style.display = 'none';
+    document.getElementById('form-success').style.display = 'block';
+  }
+</script>
+</body>
+</html>

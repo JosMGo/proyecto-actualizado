@@ -1,0 +1,225 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 440">
+  <defs>
+    <radialGradient id="bgGlow" cx="50%" cy="45%" r="55%">
+      <stop offset="0%" stop-color="#16B7CC" stop-opacity="0.13"/>
+      <stop offset="100%" stop-color="#0B1120" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blueGlow" cx="80%" cy="70%" r="40%">
+      <stop offset="0%" stop-color="#0066FF" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#0B1120" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softglow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M28 0L0 0 0 28" fill="none" stroke="#16B7CC" stroke-width="0.25" opacity="0.18"/>
+    </pattern>
+    <style>
+      .b1{animation:blink1 1.9s ease-in-out infinite}
+      .b2{animation:blink1 2.6s ease-in-out infinite .7s}
+      .b3{animation:blink1 2.2s ease-in-out infinite 1.3s}
+      .b4{animation:blink1 3.1s ease-in-out infinite .4s}
+      .pulse{animation:pulse 2s ease-in-out infinite}
+      .bar{animation:barfill 3s ease-in-out infinite alternate}
+      @keyframes blink1{0%,85%,100%{opacity:1}90%{opacity:.15}}
+      @keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+      @keyframes barfill{0%{opacity:.6}100%{opacity:.95}}
+    </style>
+  </defs>
+
+  <!-- BG -->
+  <rect width="640" height="440" fill="#0B1120"/>
+  <rect width="640" height="440" fill="url(#bgGlow)"/>
+  <rect width="640" height="440" fill="url(#blueGlow)"/>
+  <rect width="640" height="440" fill="url(#grid)"/>
+
+  <!-- ═══ RACK ENCLOSURE ═══ -->
+  <!-- Shadow -->
+  <rect x="174" y="42" width="248" height="340" rx="7" fill="#000" opacity="0.55"/>
+  <!-- Body -->
+  <rect x="170" y="38" width="248" height="340" rx="7" fill="#0F1729" stroke="#1E3A5F" stroke-width="2"/>
+  <!-- Top bar -->
+  <rect x="170" y="38" width="248" height="24" rx="7" fill="#1a2540"/>
+  <rect x="170" y="52" width="248" height="10" fill="#1a2540"/>
+  <text x="294" y="54" text-anchor="middle" fill="#16B7CC" font-size="9" font-family="monospace" opacity=".75">SIRT · RACK-01 · SANTA CRUZ BO</text>
+  <!-- Bottom bar -->
+  <rect x="170" y="354" width="248" height="24" rx="7" fill="#1a2540"/>
+  <rect x="170" y="354" width="248" height="12" fill="#1a2540"/>
+  <!-- Side rails -->
+  <rect x="158" y="46" width="12" height="316" rx="3" fill="#1a2540" stroke="#1E3A5F" stroke-width="1"/>
+  <rect x="418" y="46" width="12" height="316" rx="3" fill="#1a2540" stroke="#1E3A5F" stroke-width="1"/>
+  <!-- Rail screws -->
+  <circle cx="164" cy="70"  r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+  <circle cx="164" cy="110" r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+  <circle cx="164" cy="150" r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+  <circle cx="164" cy="190" r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+  <circle cx="164" cy="230" r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+  <circle cx="164" cy="270" r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+  <circle cx="164" cy="310" r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+  <circle cx="424" cy="70"  r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+  <circle cx="424" cy="110" r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+  <circle cx="424" cy="150" r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+  <circle cx="424" cy="190" r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+  <circle cx="424" cy="230" r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+  <circle cx="424" cy="270" r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+  <circle cx="424" cy="310" r="2.5" fill="#0F1729" stroke="#2a3550" stroke-width=".8"/>
+
+  <!-- ─── SERVER 1 ─── -->
+  <rect x="183" y="68" width="222" height="32" rx="3" fill="#111827" stroke="#2a3550" stroke-width="1"/>
+  <circle cx="197" cy="84" r="4.5" fill="#16B7CC" filter="url(#glow)" class="b1"/>
+  <circle cx="210" cy="84" r="4.5" fill="#22C55E" filter="url(#glow)" class="b2"/>
+  <rect x="222" y="73" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <rect x="236" y="73" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <rect x="250" y="73" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <rect x="264" y="73" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <text x="284" y="82" fill="#94A3B8" font-size="7.5" font-family="monospace">PowerEdge R750</text>
+  <text x="284" y="94" fill="#16B7CC" font-size="7" font-family="monospace" opacity=".8" class="pulse">● ONLINE</text>
+  <circle cx="392" cy="84" r="8" fill="#1a2540" stroke="#16B7CC" stroke-width="1.2"/>
+  <circle cx="392" cy="84" r="3.5" fill="#16B7CC" class="b1"/>
+
+  <!-- ─── SERVER 2 ─── -->
+  <rect x="183" y="104" width="222" height="32" rx="3" fill="#111827" stroke="#2a3550" stroke-width="1"/>
+  <circle cx="197" cy="120" r="4.5" fill="#22C55E" filter="url(#glow)" class="b3"/>
+  <circle cx="210" cy="120" r="4.5" fill="#22C55E" filter="url(#glow)" class="b4"/>
+  <rect x="222" y="109" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <rect x="236" y="109" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <rect x="250" y="109" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <rect x="264" y="109" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <text x="284" y="118" fill="#94A3B8" font-size="7.5" font-family="monospace">PowerEdge R740</text>
+  <text x="284" y="130" fill="#22C55E" font-size="7" font-family="monospace" opacity=".8" class="pulse">● ONLINE</text>
+  <circle cx="392" cy="120" r="8" fill="#1a2540" stroke="#22C55E" stroke-width="1.2"/>
+  <circle cx="392" cy="120" r="3.5" fill="#22C55E" class="b3"/>
+
+  <!-- ─── SWITCH ─── -->
+  <rect x="183" y="140" width="222" height="24" rx="3" fill="#0F1E35" stroke="#1E3A5F" stroke-width="1"/>
+  <rect x="193" y="145" width="8" height="14" rx="1" fill="#1a2540" stroke="#16B7CC" stroke-width=".6"/>
+  <rect x="204" y="145" width="8" height="14" rx="1" fill="#1a2540" stroke="#16B7CC" stroke-width=".6"/>
+  <rect x="215" y="145" width="8" height="14" rx="1" fill="#1a2540" stroke="#16B7CC" stroke-width=".6"/>
+  <rect x="226" y="145" width="8" height="14" rx="1" fill="#1a2540" stroke="#16B7CC" stroke-width=".6"/>
+  <rect x="237" y="145" width="8" height="14" rx="1" fill="#1a2540" stroke="#16B7CC" stroke-width=".6"/>
+  <rect x="248" y="145" width="8" height="14" rx="1" fill="#1a2540" stroke="#16B7CC" stroke-width=".6"/>
+  <rect x="259" y="145" width="8" height="14" rx="1" fill="#1a2540" stroke="#16B7CC" stroke-width=".6"/>
+  <rect x="270" y="145" width="8" height="14" rx="1" fill="#1a2540" stroke="#16B7CC" stroke-width=".6"/>
+  <circle cx="197" cy="144" r="2.2" fill="#16B7CC" class="b1" opacity=".9"/>
+  <circle cx="208" cy="144" r="2.2" fill="#22C55E" class="b2" opacity=".9"/>
+  <circle cx="219" cy="144" r="2.2" fill="#16B7CC" class="b3" opacity=".9"/>
+  <circle cx="230" cy="144" r="2.2" fill="#16B7CC" class="b4" opacity=".9"/>
+  <circle cx="241" cy="144" r="2.2" fill="#22C55E" class="b1" opacity=".9"/>
+  <circle cx="252" cy="144" r="2.2" fill="#EAB308" class="b2" opacity=".8"/>
+  <circle cx="263" cy="144" r="2.2" fill="#16B7CC" class="b3" opacity=".9"/>
+  <circle cx="274" cy="144" r="2.2" fill="#22C55E" class="b4" opacity=".9"/>
+  <text x="292" y="155" fill="#16B7CC" font-size="7.5" font-family="monospace" opacity=".8">Cisco Catalyst 9300</text>
+
+  <!-- ─── SERVER 3 ─── -->
+  <rect x="183" y="168" width="222" height="32" rx="3" fill="#111827" stroke="#2a3550" stroke-width="1"/>
+  <circle cx="197" cy="184" r="4.5" fill="#16B7CC" filter="url(#glow)" class="b2"/>
+  <circle cx="210" cy="184" r="4.5" fill="#16B7CC" filter="url(#glow)" class="b4"/>
+  <rect x="222" y="173" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <rect x="236" y="173" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <rect x="250" y="173" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <rect x="264" y="173" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <text x="284" y="182" fill="#94A3B8" font-size="7.5" font-family="monospace">PowerEdge R640</text>
+  <text x="284" y="194" fill="#16B7CC" font-size="7" font-family="monospace" opacity=".8" class="pulse">● BACKUP</text>
+  <circle cx="392" cy="184" r="8" fill="#1a2540" stroke="#16B7CC" stroke-width="1.2"/>
+  <circle cx="392" cy="184" r="3.5" fill="#16B7CC" class="b2"/>
+
+  <!-- ─── UPS ─── -->
+  <rect x="183" y="204" width="222" height="44" rx="3" fill="#0F1E35" stroke="#1E3A5F" stroke-width="1"/>
+  <text x="235" y="220" fill="#94A3B8" font-size="8" font-family="monospace">APC Smart-UPS 3000VA</text>
+  <!-- Battery bar -->
+  <rect x="193" y="224" width="80" height="14" rx="3" fill="#0B1120" stroke="#1E3A5F" stroke-width="1"/>
+  <rect x="195" y="226" width="58" height="10" rx="2" fill="#16B7CC" opacity=".75" class="bar"/>
+  <text x="280" y="234" fill="#16B7CC" font-size="8" font-family="monospace">78%</text>
+  <text x="193" y="243" fill="#22C55E" font-size="7.5" font-family="monospace" opacity=".8">● CARGANDO · 2.8 kW</text>
+  <circle cx="392" cy="226" r="5" fill="#22C55E" class="b3" opacity=".9"/>
+
+  <!-- ─── SERVER 4 (warning) ─── -->
+  <rect x="183" y="252" width="222" height="32" rx="3" fill="#111827" stroke="#2a3550" stroke-width="1"/>
+  <circle cx="197" cy="268" r="4.5" fill="#EAB308" filter="url(#glow)" class="b1"/>
+  <circle cx="210" cy="268" r="4.5" fill="#22C55E" filter="url(#glow)" class="b3"/>
+  <rect x="222" y="257" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <rect x="236" y="257" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <rect x="250" y="257" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <rect x="264" y="257" width="11" height="22" rx="2" fill="#1a2540" stroke="#2a3550" stroke-width=".5"/>
+  <text x="284" y="266" fill="#94A3B8" font-size="7.5" font-family="monospace">PowerEdge R440</text>
+  <text x="284" y="278" fill="#EAB308" font-size="7" font-family="monospace" opacity=".9" class="pulse">⚠ ATENCIÓN</text>
+  <circle cx="392" cy="268" r="8" fill="#1a2540" stroke="#EAB308" stroke-width="1.2"/>
+  <circle cx="392" cy="268" r="3.5" fill="#EAB308" class="b1"/>
+
+  <!-- ─── PATCH PANEL ─── -->
+  <rect x="183" y="288" width="222" height="22" rx="3" fill="#0F1E35" stroke="#1E3A5F" stroke-width="1"/>
+  <rect x="193" y="293" width="6" height="12" rx="1" fill="#1a2540" stroke="#2a3550" stroke-width=".4"/>
+  <rect x="202" y="293" width="6" height="12" rx="1" fill="#1a2540" stroke="#2a3550" stroke-width=".4"/>
+  <rect x="211" y="293" width="6" height="12" rx="1" fill="#1a2540" stroke="#2a3550" stroke-width=".4"/>
+  <rect x="220" y="293" width="6" height="12" rx="1" fill="#1a2540" stroke="#2a3550" stroke-width=".4"/>
+  <rect x="229" y="293" width="6" height="12" rx="1" fill="#1a2540" stroke="#2a3550" stroke-width=".4"/>
+  <rect x="238" y="293" width="6" height="12" rx="1" fill="#1a2540" stroke="#2a3550" stroke-width=".4"/>
+  <rect x="247" y="293" width="6" height="12" rx="1" fill="#1a2540" stroke="#2a3550" stroke-width=".4"/>
+  <rect x="256" y="293" width="6" height="12" rx="1" fill="#1a2540" stroke="#2a3550" stroke-width=".4"/>
+  <rect x="265" y="293" width="6" height="12" rx="1" fill="#1a2540" stroke="#2a3550" stroke-width=".4"/>
+  <rect x="274" y="293" width="6" height="12" rx="1" fill="#1a2540" stroke="#2a3550" stroke-width=".4"/>
+  <text x="295" y="303" fill="#16B7CC" font-size="7" font-family="monospace" opacity=".7">PATCH PANEL 24P</text>
+
+  <!-- ─── CABLES ─── -->
+  <path d="M205 312 Q205 336 198 360" stroke="#0066FF" stroke-width="2.5" fill="none" opacity=".65"/>
+  <path d="M215 312 Q215 338 211 360" stroke="#16B7CC" stroke-width="2.5" fill="none" opacity=".65"/>
+  <path d="M225 312 Q225 340 224 360" stroke="#22C55E" stroke-width="2.5" fill="none" opacity=".55"/>
+  <path d="M235 312 Q235 340 237 360" stroke="#0066FF" stroke-width="2.5" fill="none" opacity=".55"/>
+  <path d="M245 312 Q245 338 250 360" stroke="#16B7CC" stroke-width="2.5" fill="none" opacity=".65"/>
+  <path d="M255 312 Q255 340 263 360" stroke="#EF4444" stroke-width="2.5" fill="none" opacity=".4"/>
+  <path d="M265 312 Q265 340 276 360" stroke="#16B7CC" stroke-width="2.5" fill="none" opacity=".5"/>
+  <!-- Cable mgmt bar -->
+  <rect x="183" y="312" width="222" height="24" rx="3" fill="#0B1120" stroke="#1E3A5F" stroke-width="1"/>
+  <text x="294" y="327" text-anchor="middle" fill="#1E3A5F" font-size="7.5" font-family="monospace">CABLE MANAGEMENT</text>
+
+  <!-- ═══ FLOATING PANELS ═══ -->
+  <!-- CPU -->
+  <rect x="18" y="72" width="118" height="68" rx="8" fill="rgba(15,23,42,0.95)" stroke="#1E3A5F" stroke-width="1"/>
+  <text x="77" y="89" text-anchor="middle" fill="#16B7CC" font-size="8.5" font-family="monospace" font-weight="bold">CPU</text>
+  <rect x="28" y="96" width="98" height="9" rx="4" fill="#0B1120"/>
+  <rect x="28" y="96" width="70" height="9" rx="4" fill="#16B7CC" opacity=".8" class="bar"/>
+  <text x="28" y="118" fill="#94A3B8" font-size="7.5" font-family="monospace">72% · 32 núcleos</text>
+  <line x1="136" y1="106" x2="158" y2="106" stroke="#1E3A5F" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- RAM -->
+  <rect x="18" y="154" width="118" height="68" rx="8" fill="rgba(15,23,42,0.95)" stroke="#1E3A5F" stroke-width="1"/>
+  <text x="77" y="171" text-anchor="middle" fill="#22C55E" font-size="8.5" font-family="monospace" font-weight="bold">MEMORIA</text>
+  <rect x="28" y="178" width="98" height="9" rx="4" fill="#0B1120"/>
+  <rect x="28" y="178" width="53" height="9" rx="4" fill="#22C55E" opacity=".75" class="bar"/>
+  <text x="28" y="200" fill="#94A3B8" font-size="7.5" font-family="monospace">54% · 128 GB ECC</text>
+  <line x1="136" y1="188" x2="158" y2="188" stroke="#1E3A5F" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Network -->
+  <rect x="504" y="72" width="118" height="68" rx="8" fill="rgba(15,23,42,0.95)" stroke="#1E3A5F" stroke-width="1"/>
+  <text x="563" y="89" text-anchor="middle" fill="#0066FF" font-size="8.5" font-family="monospace" font-weight="bold">RED</text>
+  <rect x="514" y="96" width="98" height="9" rx="4" fill="#0B1120"/>
+  <rect x="514" y="96" width="84" height="9" rx="4" fill="#0066FF" opacity=".8" class="bar"/>
+  <text x="514" y="118" fill="#94A3B8" font-size="7.5" font-family="monospace">↑↓ 850 Mbps</text>
+  <line x1="430" y1="106" x2="504" y2="106" stroke="#1E3A5F" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Storage -->
+  <rect x="504" y="154" width="118" height="68" rx="8" fill="rgba(15,23,42,0.95)" stroke="#1E3A5F" stroke-width="1"/>
+  <text x="563" y="171" text-anchor="middle" fill="#EAB308" font-size="8.5" font-family="monospace" font-weight="bold">DISCO</text>
+  <rect x="514" y="178" width="98" height="9" rx="4" fill="#0B1120"/>
+  <rect x="514" y="178" width="66" height="9" rx="4" fill="#EAB308" opacity=".75" class="bar"/>
+  <text x="514" y="200" fill="#94A3B8" font-size="7.5" font-family="monospace">67% · 20 TB NVMe</text>
+  <line x1="430" y1="188" x2="504" y2="188" stroke="#1E3A5F" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- Temp -->
+  <rect x="504" y="236" width="118" height="68" rx="8" fill="rgba(15,23,42,0.95)" stroke="#1E3A5F" stroke-width="1"/>
+  <text x="563" y="253" text-anchor="middle" fill="#16B7CC" font-size="8.5" font-family="monospace" font-weight="bold">TEMPERATURA</text>
+  <text x="563" y="285" text-anchor="middle" fill="#16B7CC" font-size="26" font-weight="900" font-family="monospace">24°C</text>
+  <line x1="430" y1="270" x2="504" y2="270" stroke="#1E3A5F" stroke-width="1" stroke-dasharray="3,2"/>
+
+  <!-- ═══ STATUS BAR ═══ -->
+  <rect x="40" y="404" width="560" height="22" rx="6" fill="rgba(15,23,42,0.85)" stroke="#1E3A5F" stroke-width="1"/>
+  <circle cx="60" cy="415" r="4.5" fill="#22C55E" class="b2"/>
+  <text x="72" y="419" fill="#22C55E" font-size="8" font-family="monospace">TODOS LOS SISTEMAS OPERATIVOS</text>
+  <circle cx="380" cy="415" r="4.5" fill="#16B7CC" class="b1"/>
+  <text x="392" y="419" fill="#16B7CC" font-size="8" font-family="monospace">SIRT-BOL-DC01 · Santa Cruz</text>
+</svg>

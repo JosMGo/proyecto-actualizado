@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SIRT — Centro de Soporte Técnico</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <link rel="stylesheet" href="sirt.css" />
+</head>
+<body>
+
+<header class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="img/LOGO.jpeg" alt="SIRT Logo" style="height:42px; width:42px; object-fit:cover; border-radius:50%;" />
+    </a>
+    <button class="nav-toggle" id="nav-toggle"><i class="ti ti-menu-2"></i></button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="nosotros.html">Nosotros</a></li>
+      <li><a href="servicios.html">Servicios</a></li>
+      <li><a href="productos.html">Productos</a></li>
+      <li><a href="clientes.html">Clientes</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="soporte.html" class="btn-soporte"><i class="ti ti-ticket"></i> Soporte IT</a>
+      <a href="contacto.html" class="btn-contacto">Contacto <i class="ti ti-arrow-right"></i></a>
+    </div>
+  </div>
+</header>
+
+<!-- PAGE BANNER -->
+<section class="page-banner">
+  <div class="container">
+    <div class="breadcrumb">
+      <a href="index.html">Inicio</a>
+      <i class="ti ti-chevron-right" style="font-size:12px;"></i>
+      <span>Soporte IT</span>
+    </div>
+    <span class="pb-tag"><i class="ti ti-headset"></i> Mesa de ayuda</span>
+    <h1>Centro de Soporte Técnico</h1>
+    <p>Gestiona tus tickets, consulta el estado de tus casos y accede al historial de soporte. Elige tu portal según tu rol para comenzar.</p>
+  </div>
+</section>
+
+<!-- PORTAL CARDS -->
+<section class="section" style="text-align:center;">
+  <div class="container">
+    <div class="sec-head center">
+      <span class="sec-label"><i class="ti ti-layout-dashboard"></i> Acceso al sistema</span>
+      <h2 class="sec-title">Selecciona tu Portal</h2>
+      <p class="sec-sub">Accede al portal correspondiente a tu perfil. Clientes para gestionar sus solicitudes, administradores para supervisar y asignar casos.</p>
+    </div>
+    <div class="soporte-cards">
+
+      <!-- Cliente -->
+      <div class="soporte-card sc-client">
+        <div class="sb-icon cyan"><i class="ti ti-user"></i></div>
+        <div class="sb-title">Portal Cliente</div>
+        <p class="sb-desc">Abre nuevos tickets de soporte, consulta el estado de tus casos activos y revisa tus horas contratadas de servicio técnico.</p>
+        <a href="../tikckets/login-client.html" class="sb-btn-cyan">
+          <i class="ti ti-login"></i> Ingresar como Cliente
+        </a>
+      </div>
+
+      <!-- Admin -->
+      <div class="soporte-card sc-admin">
+        <div class="sb-icon green"><i class="ti ti-layout-dashboard"></i></div>
+        <div class="sb-title">Dashboard Admin</div>
+        <p class="sb-desc">Gestiona todos los tickets del sistema, asigna técnicos a los casos, analiza el rendimiento del equipo y genera reportes.</p>
+        <a href="../tikckets/login-admin.html" class="sb-btn-green">
+          <i class="ti ti-login"></i> Ingresar como Admin
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section-dark">
+  <div class="container">
+    <div class="sec-head center">
+      <span class="sec-label"><i class="ti ti-list-numbers"></i> Proceso simple</span>
+      <h2 class="sec-title">¿Cómo funciona?</h2>
+      <p class="sec-sub">Nuestro sistema de tickets es intuitivo y te permite dar seguimiento a cada caso en tiempo real.</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Inicia sesión</div>
+        <p class="step-desc">Accede al portal con tus credenciales de cliente. Si no tienes cuenta, contáctanos para crear tu acceso de forma gratuita.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Crea o consulta tu ticket</div>
+        <p class="step-desc">Abre un nuevo ticket describiendo el problema o consulta, o revisa el estado de los casos que ya tienes abiertos con nuestro equipo.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Seguimiento en tiempo real</div>
+        <p class="step-desc">Recibe actualizaciones sobre el progreso de cada caso, comunícate con el técnico asignado y confirma la resolución del problema.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANES DE SOPORTE -->
+<section class="section">
+  <div class="container">
+    <div class="sec-head center">
+      <span class="sec-label"><i class="ti ti-clipboard-check"></i> Planes de mantenimiento</span>
+      <h2 class="sec-title">Conoce todos nuestros planes</h2>
+      <p class="sec-sub">¡Nos adaptamos a tus necesidades! Elige el plan de soporte técnico mensual que mejor se ajuste a tu empresa.</p>
+    </div>
+
+    <div class="plans-grid">
+
+      <!-- BÁSICO -->
+      <div class="plan-card">
+        <div class="plan-name">Plan Básico</div>
+        <div class="plan-price">
+          <span class="currency">Bs</span><span class="amount">1.500</span><span class="period">/mes</span>
+        </div>
+        <div class="plan-hourly">Pago por hora: <strong>93,75 Bs</strong></div>
+
+        <ul class="plan-features">
+          <li><i class="ti ti-check"></i> 4 visitas mensuales (16 horas)</li>
+          <li><i class="ti ti-check"></i> Mantenimiento preventivo y correctivo del hardware y software básico de la dirección de trabajo</li>
+          <li><i class="ti ti-check"></i> Supervisión del rendimiento de los equipos</li>
+          <li><i class="ti ti-check"></i> Control de los sistemas de seguridad</li>
+        </ul>
+
+        <div class="plan-includes-title"><i class="ti ti-gift"></i> Incluye</div>
+        <ul class="plan-includes">
+          <li><i class="ti ti-point-filled"></i> Reporte mensual</li>
+          <li><i class="ti ti-point-filled"></i> Soporte remoto</li>
+        </ul>
+
+        <a href="https://wa.me/59175582445?text=Hola%2C%20quiero%20contratar%20el%20Plan%20B%C3%A1sico%20de%20soporte%20(1.500%20Bs%2Fmes)." class="plan-btn outline" target="_blank">
+          <i class="ti ti-brand-whatsapp"></i> Contratar Plan Básico
+        </a>
+      </div>
+
+      <!-- ESTÁNDAR (destacado) -->
+      <div class="plan-card featured">
+        <div class="plan-badge"><i class="ti ti-star-filled"></i> Recomendado</div>
+        <div class="plan-name">Plan Estándar</div>
+        <div class="plan-price">
+          <span class="currency">Bs</span><span class="amount">2.500</span><span class="period">/mes</span>
+        </div>
+        <div class="plan-hourly">Pago por hora: <strong>83,83 Bs</strong></div>
+
+        <ul class="plan-features">
+          <li><i class="ti ti-check"></i> 6 visitas mensuales (30 horas)</li>
+          <li><i class="ti ti-check"></i> Mantenimiento preventivo y correctivo del hardware y software básico de la dirección de trabajo</li>
+          <li><i class="ti ti-check"></i> Supervisión del rendimiento de equipos</li>
+          <li><i class="ti ti-check"></i> Control de sistemas de seguridad</li>
+          <li><i class="ti ti-check"></i> Administración de los servidores de red y las herramientas tecnológicas</li>
+          <li><i class="ti ti-check"></i> Copias de seguridad</li>
+        </ul>
+
+        <div class="plan-includes-title"><i class="ti ti-gift"></i> Incluye</div>
+        <ul class="plan-includes">
+          <li><i class="ti ti-point-filled"></i> Reporte mensual</li>
+          <li><i class="ti ti-point-filled"></i> Soporte remoto</li>
+          <li><i class="ti ti-point-filled"></i> Inventario de los equipos de cómputo e impresoras</li>
+        </ul>
+
+        <a href="https://wa.me/59175582445?text=Hola%2C%20quiero%20contratar%20el%20Plan%20Est%C3%A1ndar%20de%20soporte%20(2.500%20Bs%2Fmes)." class="plan-btn primary" target="_blank">
+          <i class="ti ti-brand-whatsapp"></i> Contratar Plan Estándar
+        </a>
+      </div>
+
+      <!-- PREMIUM -->
+      <div class="plan-card">
+        <div class="plan-name">Plan Premium</div>
+        <div class="plan-price">
+          <span class="currency">Bs</span><span class="amount">3.500</span><span class="period">/mes</span>
+        </div>
+        <div class="plan-hourly">Pago por hora: <strong>67,30 Bs</strong></div>
+
+        <ul class="plan-features">
+          <li><i class="ti ti-check"></i> 8 visitas mensuales (52 horas)</li>
+          <li><i class="ti ti-check"></i> Mantenimiento preventivo y correctivo del hardware y software básico de la dirección de trabajo</li>
+          <li><i class="ti ti-check"></i> Supervisión de rendimiento de equipos</li>
+          <li><i class="ti ti-check"></i> Control de sistemas de seguridad</li>
+          <li><i class="ti ti-check"></i> Administración de los servidores de red y estándares tecnológicos que aporten al desarrollo institucional</li>
+          <li><i class="ti ti-check"></i> Recepción de fallas de hardware en Servidores, PC e Impresoras</li>
+        </ul>
+
+        <div class="plan-includes-title"><i class="ti ti-gift"></i> Incluye</div>
+        <ul class="plan-includes">
+          <li><i class="ti ti-point-filled"></i> Reporte mensual</li>
+          <li><i class="ti ti-point-filled"></i> Soporte remoto gratuito dentro de horario de oficina</li>
+          <li><i class="ti ti-point-filled"></i> Inventario de los equipos de cómputo e impresoras</li>
+        </ul>
+
+        <a href="https://wa.me/59175582445?text=Hola%2C%20quiero%20contratar%20el%20Plan%20Premium%20de%20soporte%20(3.500%20Bs%2Fmes)." class="plan-btn outline" target="_blank">
+          <i class="ti ti-brand-whatsapp"></i> Contratar Plan Premium
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA (urgente por WhatsApp) -->
+<section class="section">
+  <div class="container">
+    <div class="cta-section">
+      <h2>¿Tienes una urgencia técnica?</h2>
+      <p>Para problemas críticos que no pueden esperar, contáctanos directamente por WhatsApp. Nuestro equipo de soporte responderá de inmediato.</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/59175582445?text=Hola%2C%20tengo%20una%20urgencia%20t%C3%A9cnica%20y%20necesito%20soporte%20inmediato." class="btn-primary" target="_blank">
+          <i class="ti ti-brand-whatsapp"></i> WhatsApp Urgente
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="index.html" class="nav-logo" style="margin-bottom:4px">
+          <img src="img/LOGO.jpeg" alt="SIRT Logo" style="height:42px; width:42px; object-fit:cover; border-radius:50%;" />
+        </a>
+        <p class="footer-brand-desc">Redes y Telecomunicaciones. Soluciones de conectividad e infraestructura tecnológica en Bolivia.</p>
+        <div class="social-links">
+          <a href="https://facebook.com/SirtBoliviasc" class="social-btn" target="_blank"><i class="ti ti-brand-facebook"></i></a>
+          <a href="https://instagram.com/sirtbosc" class="social-btn" target="_blank"><i class="ti ti-brand-instagram"></i></a>
+          <a href="https://wa.me/59175582445" class="social-btn" target="_blank"><i class="ti ti-brand-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Navegación</h4>
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="servicios.html">Servicios</a>
+        <a href="productos.html">Productos</a>
+        <a href="clientes.html">Clientes</a>
+        <a href="soporte.html">Soporte IT</a>
+        <a href="contacto.html">Contacto</a>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <a href="servicios.html">Cableado Estructurado</a>
+        <a href="servicios.html">Sistemas de Seguridad</a>
+        <a href="servicios.html">Soluciones TI</a>
+        <a href="servicios.html">Enlace Inalámbrico</a>
+        <a href="servicios.html">Centros de Datos</a>
+        <a href="soporte.html">Soporte IT</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <p><i class="ti ti-map-pin"></i> Radial 17½ / 5to Anillo<br>Jardín Latino, Santa Cruz</p>
+        <a href="tel:75582445"><i class="ti ti-phone"></i> 75582445</a>
+        <a href="https://wa.me/59175582445"><i class="ti ti-brand-whatsapp"></i> 75582445</a>
+        <a href="mailto:info@sirtsc.com"><i class="ti ti-mail"></i> info@sirtsc.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2024 SIRT — Redes y Telecomunicaciones. Todos los derechos reservados.</span>
+      <span>Santa Cruz, Bolivia</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('nav-toggle').addEventListener('click', function() {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+</script>
+</body>
+</html>

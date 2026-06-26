@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>SoporteIT — Portal Cliente · Trabajo</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <script>
+    // Guard: solo clientes del portal por trabajo
+    try {
+      const a = JSON.parse(sessionStorage.getItem('soporte_auth'));
+      if (!a || a.role !== 'client' || a.portal !== 'trabajo') window.location.replace('login-client.html');
+    } catch(e) { window.location.replace('login-client.html'); }
+  </script>
+</head>
+<body>
+
+<div class="app" id="app">
+  <div id="modal-container"></div>
+
+  <div class="topbar">
+    <div class="logo">
+      <i class="ti ti-bolt" aria-hidden="true"></i>
+      SoporteIT
+    </div>
+
+    <div class="topbar-center">
+      <span class="topbar-badge"><i class="ti ti-briefcase" style="margin-right:4px"></i>Portal Cliente · Trabajo</span>
+    </div>
+
+    <div class="topbar-right">
+      <span class="topbar-username" id="topbar-client-name"></span>
+      <button class="btn btn-sm" onclick="logout('index.html')">
+        <i class="ti ti-arrow-left"></i> Inicio
+      </button>
+      <button class="btn btn-sm" onclick="logout()">
+        <i class="ti ti-logout"></i> Salir
+      </button>
+    </div>
+  </div>
+
+  <div class="main" id="main-area"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('aNmh_uRhAuTPAXKck');</script>
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
+<script src="app.js"></script>
+<script src="logo-data.js"></script>
+<script src="work-data.js"></script>
+<script src="client-trabajo.js"></script>
+<script>
+  window.addEventListener('pageshow', () => {
+    try {
+      const a = JSON.parse(sessionStorage.getItem('soporte_auth'));
+      if (!a || a.role !== 'client' || a.portal !== 'trabajo') window.location.replace('login-client.html');
+    } catch (e) {
+      window.location.replace('login-client.html');
+    }
+  });
+</script>
+</body>
+</html>

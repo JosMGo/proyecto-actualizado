@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>SoporteIT — Dashboard Admin</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>#app{visibility:hidden}</style>
+</head>
+<body>
+
+<div class="app" id="app">
+  <div id="modal-container"></div>
+
+  <div class="topbar">
+    <div class="logo">
+      <i class="ti ti-bolt" aria-hidden="true"></i>
+      SoporteIT
+    </div>
+
+    <div class="topbar-center">
+      <span class="topbar-badge topbar-badge--admin">Dashboard Admin</span>
+    </div>
+
+    <div class="topbar-right">
+      <span class="topbar-username" id="topbar-admin-name"></span>
+      <button class="btn btn-sm" onclick="logout()">
+        <i class="ti ti-logout"></i> Salir
+      </button>
+    </div>
+  </div>
+
+  <div class="main" id="main-area"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="auth.js"></script>
+<script src="app.js"></script>
+<script src="whatsapp.js"></script>
+<script src="admin.js"></script>
+<script src="historico.js"></script>
+<script src="work-data.js"></script>
+<script src="admin-trabajo.js"></script>
+<script>
+  async function ensureAdminAccess() {
+    let auth = getAuth();
+    if (!auth || auth.role !== 'admin') {
+      // Fallback: verificar sesión activa de Supabase
+      const { data } = await _sb.auth.getSession();
+      if (data.session) {
+        auth = { role: 'admin', email: data.session.user.email };
+        setAuth(auth);
+      } else {
+        window.location.replace('login-admin.html');
+        return;
+      }
+    }
+    // Mostrar email en topbar y hacer visible la app
+    const nameEl = document.getElementById('topbar-admin-name');
+    if (nameEl && auth.email) nameEl.textContent = auth.email.split('@')[0];
+    document.getElementById('app').style.visibility = 'visible';
+  }
+
+  ensureAdminAccess();
+
+  window.addEventListener('pageshow', (event) => {
+    if (event.persisted) ensureAdminAccess();
+  });
+</script>
+</body>
+</html>
