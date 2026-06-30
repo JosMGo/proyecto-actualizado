@@ -1,0 +1,5 @@
+# SIRT — aplicación de tickets (portal privado de clientes y admin).
+# NO debe indexarse en buscadores. Usar si se sirve en su propio (sub)dominio.
+
+User-agent: *
+Disallow: /

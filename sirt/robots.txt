@@ -1,0 +1,11 @@
+# SIRT — robots.txt del sitio público
+# Reemplaza www.tudominio.com por tu dominio real.
+
+User-agent: *
+Allow: /
+
+# La aplicación de tickets no debe indexarse (datos privados de clientes).
+# Aplica solo si la sirves como subcarpeta /tickets en este mismo dominio.
+Disallow: /tickets/
+
+Sitemap: https://www.tudominio.com/sitemap.xml
