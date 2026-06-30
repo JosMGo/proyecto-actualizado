@@ -39,7 +39,7 @@ function getCompanyBadgeHtml(clientId) {
   }
 
   const tone = COMPANY_BADGE_PALETTE[CLIENTS.findIndex(c => c.id === clientId) % COMPANY_BADGE_PALETTE.length];
-  return `<span class="company-badge" style="background:${tone.bg};color:${tone.fg}">${client.name}</span>`;
+  return `<span class="company-badge" style="background:${tone.bg};color:${tone.fg}">${escapeHtml(client.name)}</span>`;
 }
 
 function renderAdmin() {
@@ -71,7 +71,7 @@ function renderAdmin() {
               return `
               <tr${unassigned ? ' style="background:#fffbeb"' : ''}>
                 <td style="color:var(--muted);font-size:12px">${t.id}</td>
-                <td style="cursor:pointer;color:var(--primary-dark);font-weight:500" onclick="openDetail('${t.id}')">${t.title}</td>
+                <td style="cursor:pointer;color:var(--primary-dark);font-weight:500" onclick="openDetail('${t.id}')">${escapeHtml(t.title)}</td>
                 <td>
                   <div class="ticket-status-wrap">
                     ${sBadge(t.status)}
@@ -81,7 +81,7 @@ function renderAdmin() {
                 <td>${pBadge(t.prio)}</td>
                 <td>
                   <select class="tech-sel${unassigned ? ' tech-sel--unassigned' : ''}" onchange="assignTech('${t.id}', this.value)">
-                    ${TECHS.map(tc => `<option${tc === t.tech ? ' selected' : ''}>${tc}</option>`).join('')}
+                    ${TECHS.map(tc => `<option${tc === t.tech ? ' selected' : ''}>${escapeHtml(tc)}</option>`).join('')}
                     <option value="__add__" style="color:#0C447C;font-weight:600;border-top:1px solid #ddd">＋ Agregar técnico</option>
                   </select>
                 </td>
@@ -112,7 +112,7 @@ function renderAdmin() {
         const extraHours = getMonthlyExtraHours(cl.id);
         return `
           <div class="hora-bar" style="display:flex;align-items:center;gap:10px">
-            <div class="hora-name" style="flex:0 0 140px">${cl.name}</div>
+            <div class="hora-name" style="flex:0 0 140px">${escapeHtml(cl.name)}</div>
             <div class="hora-prog" style="flex:1"><div class="hora-fill" style="width:${pct}%; background:${c}"></div></div>
             <div class="hora-val" style="flex:0 0 160px">${cl.used}/${cl.hours}h (${pct}%)${extraHours > 0 ? ` <span class="company-extra">+${extraHours}h extras</span>` : ''}</div>
             <button class="btn btn-sm" onclick="openClientForm(${cl.id})" style="flex-shrink:0"><i class="ti ti-edit"></i></button>
@@ -135,7 +135,7 @@ function renderAdmin() {
       </div>
       ${byClient.map(cl => `
         <div style="margin-bottom:22px">
-          <div style="font-size:11px;font-weight:bold;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)">${cl.name}</div>
+          <div style="font-size:11px;font-weight:bold;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)">${escapeHtml(cl.name)}</div>
           ${cl.members.length === 0
             ? `<div style="font-size:13px;color:var(--muted);padding:6px 0">Sin usuarios — crea uno con el botón superior.</div>`
             : `<table class="tbl">
@@ -143,8 +143,8 @@ function renderAdmin() {
                 <tbody>
                   ${cl.members.map(u => `
                     <tr>
-                      <td>${u.name}</td>
-                      <td style="color:var(--muted);font-size:12px">${u.user}</td>
+                      <td>${escapeHtml(u.name)}</td>
+                      <td style="color:var(--muted);font-size:12px">${escapeHtml(u.user)}</td>
                       <td>
                         <div style="display:flex;gap:6px">
                           <button class="btn btn-sm" onclick="openUserForm(${u.id})"><i class="ti ti-edit"></i></button>
@@ -172,7 +172,7 @@ function renderAdmin() {
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
         <select class="form-input" onchange="setCalFilter(this.value)" style="max-width:210px;width:auto">
           <option value="-2"${calClientFilter === -2 ? ' selected' : ''}>Todas las empresas</option>
-          ${CLIENTS.map(cl => `<option value="${cl.id}"${calClientFilter === cl.id ? ' selected' : ''}>${cl.name}</option>`).join('')}
+          ${CLIENTS.map(cl => `<option value="${cl.id}"${calClientFilter === cl.id ? ' selected' : ''}>${escapeHtml(cl.name)}</option>`).join('')}
         </select>
         <button class="btn btn-primary" onclick="openEventForm(null, null)">
           <i class="ti ti-plus"></i> Nueva actividad
@@ -303,12 +303,12 @@ function renderEmpresasTab() {
               ${clTickets.map(t => `
                 <tr>
                   <td style="color:var(--muted)">${t.id}</td>
-                  <td style="cursor:pointer;color:var(--primary)" onclick="openDetail('${t.id}')">${t.title}</td>
+                  <td style="cursor:pointer;color:var(--primary)" onclick="openDetail('${t.id}')">${escapeHtml(t.title)}</td>
                   <td>${sBadge(t.status)}</td>
                   <td>${pBadge(t.prio)}</td>
                   <td>
                     <select class="tech-sel" onchange="assignTech('${t.id}', this.value)">
-                      ${TECHS.map(tc => `<option${tc === t.tech ? ' selected' : ''}>${tc}</option>`).join('')}
+                      ${TECHS.map(tc => `<option${tc === t.tech ? ' selected' : ''}>${escapeHtml(tc)}</option>`).join('')}
                     </select>
                   </td>
                   <td>${t.hours}</td>
@@ -322,8 +322,8 @@ function renderEmpresasTab() {
       ? `<div style="font-size:13px;color:var(--muted)">Sin usuarios registrados.</div>`
       : clUsers.map(u => `
           <span style="display:inline-flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;margin:3px">
-            <i class="ti ti-user" style="font-size:12px;color:var(--muted)"></i> ${u.name}
-            <span style="color:var(--muted);font-size:11px">(${u.user})</span>
+            <i class="ti ti-user" style="font-size:12px;color:var(--muted)"></i> ${escapeHtml(u.name)}
+            <span style="color:var(--muted);font-size:11px">(${escapeHtml(u.user)})</span>
           </span>`).join('');
 
     return `
@@ -331,7 +331,7 @@ function renderEmpresasTab() {
         <div class="empresa-header" onclick="toggleEmpresa(${cl.id})">
           <div class="empresa-header-left">
             <i class="ti ti-chevron-right empresa-chevron"></i>
-            <span class="empresa-name">${cl.name}</span>
+            <span class="empresa-name">${escapeHtml(cl.name)}</span>
             <span class="empresa-chips">
               <span class="echip echip-open">${openTk} abiertos</span>
               <span class="echip echip-pending">${pendingTk} en proceso</span>
@@ -388,14 +388,14 @@ function openDetail(id) {
   openModal(`
     <div class="modal" onclick="event.stopPropagation()">
       <div class="modal-title">
-        <span>${t.id} — ${t.title}</span>
+        <span>${escapeHtml(t.id)} — ${escapeHtml(t.title)}</span>
         <button class="btn btn-sm" onclick="closeModal()"><i class="ti ti-x"></i></button>
       </div>
 
       <div class="detail-grid">
         <div><div class="form-label">Estado</div>${sBadge(t.status)}</div>
         <div><div class="form-label">Prioridad</div>${pBadge(t.prio)}</div>
-        <div><div class="form-label">Técnico</div><span style="font-size:13px">${t.tech}</span></div>
+        <div><div class="form-label">Técnico</div><span style="font-size:13px">${escapeHtml(t.tech)}</span></div>
         <div>
           <div class="form-label">Horas registradas</div>
           <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
@@ -411,7 +411,7 @@ function openDetail(id) {
       ${t.desc ? `
         <div class="form-row">
           <div class="form-label">Descripción</div>
-          <div style="font-size:13px; line-height:1.5">${t.desc}</div>
+          <div style="font-size:13px; line-height:1.5">${escapeHtml(t.desc)}</div>
         </div>
       ` : ''}
 
@@ -429,7 +429,7 @@ function openDetail(id) {
       <div class="form-row">
         <div class="form-label">Asignar técnico</div>
         <select class="form-input" onchange="assignTech('${t.id}', this.value); closeModal(); render()">
-          ${TECHS.map(tc => `<option${tc === t.tech ? ' selected' : ''}>${tc}</option>`).join('')}
+          ${TECHS.map(tc => `<option${tc === t.tech ? ' selected' : ''}>${escapeHtml(tc)}</option>`).join('')}
         </select>
       </div>
 
@@ -488,8 +488,8 @@ function openCloseModal(id) {
       </div>
 
       <div style="background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:13px">
-        <div style="font-weight:700;margin-bottom:4px">${t.id} — ${t.title}</div>
-        <div style="color:var(--muted)">${cl ? cl.name : '—'}</div>
+        <div style="font-weight:700;margin-bottom:4px">${escapeHtml(t.id)} — ${escapeHtml(t.title)}</div>
+        <div style="color:var(--muted)">${cl ? escapeHtml(cl.name) : '—'}</div>
       </div>
 
       <div class="form-row">
@@ -501,7 +501,7 @@ function openCloseModal(id) {
         </div>
         ${cl && remaining !== null ? `
           <div style="margin-top:8px;font-size:12px;color:var(--muted)">
-            Horas disponibles de <strong>${cl.name}</strong>:
+            Horas disponibles de <strong>${escapeHtml(cl.name)}</strong>:
             <strong style="color:${remaining <= 2 ? '#E24B4A' : '#22c55e'}">${remaining.toFixed(1)}h restantes</strong>
             de ${cl.hours}h contratadas
           </div>
@@ -586,7 +586,9 @@ Descripción: ${t.desc || 'Sin descripción'}`
     });
 
     const data = await response.json();
-    box.innerHTML = data.content?.[0]?.text || 'Sin respuesta de la IA.';
+    // textContent (no innerHTML): la respuesta de la IA puede reflejar datos
+    // escritos por el usuario; renderizarla como HTML sería un vector XSS.
+    box.textContent = data.content?.[0]?.text || 'Sin respuesta de la IA.';
 
   } catch (err) {
     console.error(err);
@@ -617,12 +619,12 @@ function openUserForm(userId) {
 
       <div class="form-row">
         <label class="form-label">Nombre completo</label>
-        <input class="form-input" id="u-name" value="${u ? u.name : ''}" placeholder="Ej: Juan Pérez" />
+        <input class="form-input" id="u-name" value="${u ? escapeHtml(u.name) : ''}" placeholder="Ej: Juan Pérez" />
       </div>
 
       <div class="form-row">
         <label class="form-label">Usuario (para iniciar sesión)</label>
-        <input class="form-input" id="u-user" value="${u ? u.user : ''}" placeholder="Ej: juan.publicarte" autocomplete="off" />
+        <input class="form-input" id="u-user" value="${u ? escapeHtml(u.user) : ''}" placeholder="Ej: juan.publicarte" autocomplete="off" />
       </div>
 
       <div class="form-row">
@@ -638,7 +640,7 @@ function openUserForm(userId) {
       <div class="form-row">
         <label class="form-label">Empresa</label>
         <select class="form-input" id="u-client">
-          ${CLIENTS.map(cl => `<option value="${cl.id}"${u && u.client === cl.id ? ' selected' : ''}>${cl.name}</option>`).join('')}
+          ${CLIENTS.map(cl => `<option value="${cl.id}"${u && u.client === cl.id ? ' selected' : ''}>${escapeHtml(cl.name)}</option>`).join('')}
         </select>
       </div>
 
@@ -728,7 +730,7 @@ function openEventDetail(id) {
   openModal(`
     <div class="modal" onclick="event.stopPropagation()">
       <div class="modal-title">
-        <span>${ev.title}</span>
+        <span>${escapeHtml(ev.title)}</span>
         <button class="btn btn-sm" onclick="closeModal()"><i class="ti ti-x"></i></button>
       </div>
       <div style="margin-bottom:14px">
@@ -738,9 +740,9 @@ function openEventDetail(id) {
         <div><div class="form-label">Fecha</div><span style="font-size:13px">${formatDate(ev.date)}</span></div>
         <div><div class="form-label">Hora</div><span style="font-size:13px">${ev.time}</span></div>
         <div><div class="form-label">Empresa</div><span style="font-size:13px">${clientName}</span></div>
-        <div><div class="form-label">Técnico</div><span style="font-size:13px">${ev.tech}</span></div>
+        <div><div class="form-label">Técnico</div><span style="font-size:13px">${escapeHtml(ev.tech)}</span></div>
       </div>
-      ${ev.desc ? `<div class="form-row"><div class="form-label">Descripción</div><div style="font-size:13px;line-height:1.5">${ev.desc}</div></div>` : ''}
+      ${ev.desc ? `<div class="form-row"><div class="form-label">Descripción</div><div style="font-size:13px;line-height:1.5">${escapeHtml(ev.desc)}</div></div>` : ''}
       <div class="modal-actions">
         <button class="btn" style="border-color:#E24B4A;color:#a42828;margin-right:auto" onclick="deleteEvent('${ev.id}')">
           <i class="ti ti-trash"></i> Eliminar
@@ -765,7 +767,7 @@ function openEventForm(date, eventId) {
 
       <div class="form-row">
         <label class="form-label">Título</label>
-        <input class="form-input" id="ev-title" value="${ev ? ev.title : ''}" placeholder="Nombre de la actividad" />
+        <input class="form-input" id="ev-title" value="${ev ? escapeHtml(ev.title) : ''}" placeholder="Nombre de la actividad" />
       </div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
@@ -793,7 +795,7 @@ function openEventForm(date, eventId) {
         <select class="form-input" id="ev-client">
           <option value="-1"${ev && ev.client === -1 ? ' selected' : ''}>Todas las empresas</option>
           ${CLIENTS.map(cl =>
-            `<option value="${cl.id}"${ev && ev.client === cl.id ? ' selected' : ''}>${cl.name}</option>`
+            `<option value="${cl.id}"${ev && ev.client === cl.id ? ' selected' : ''}>${escapeHtml(cl.name)}</option>`
           ).join('')}
         </select>
       </div>
@@ -801,13 +803,13 @@ function openEventForm(date, eventId) {
       <div class="form-row">
         <label class="form-label">Técnico</label>
         <select class="form-input" id="ev-tech">
-          ${TECHS.map(tc => `<option${ev && ev.tech === tc ? ' selected' : ''}>${tc}</option>`).join('')}
+          ${TECHS.map(tc => `<option${ev && ev.tech === tc ? ' selected' : ''}>${escapeHtml(tc)}</option>`).join('')}
         </select>
       </div>
 
       <div class="form-row">
         <label class="form-label">Descripción</label>
-        <textarea class="form-input" id="ev-desc" rows="2" placeholder="Detalle opcional de la actividad">${ev ? ev.desc : ''}</textarea>
+        <textarea class="form-input" id="ev-desc" rows="2" placeholder="Detalle opcional de la actividad">${ev ? escapeHtml(ev.desc) : ''}</textarea>
       </div>
 
       <div class="modal-actions">
@@ -929,7 +931,7 @@ function openClientForm(clientId) {
 
       <div class="form-row">
         <label class="form-label">Nombre de la empresa</label>
-        <input class="form-input" id="cl-name" value="${cl ? cl.name : ''}" placeholder="Ej: NovaGro" />
+        <input class="form-input" id="cl-name" value="${cl ? escapeHtml(cl.name) : ''}" placeholder="Ej: NovaGro" />
       </div>
 
       <div class="form-row">

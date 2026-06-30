@@ -89,13 +89,13 @@ function renderWorkTicketsTab() {
         return `
         <tr${unassigned ? ' style="background:#fffbeb"' : ''}>
           <td style="color:var(--muted);font-size:12px">${t.id}</td>
-          <td style="font-weight:500;color:var(--primary-dark)">${t.title}</td>
-          <td><span class="company-badge" style="background:#eef2f6;color:#475467">${workName(t.workId)}</span><div style="font-size:11px;color:var(--muted);margin-top:2px">${workClientName(t.clientId)}</div></td>
+          <td style="font-weight:500;color:var(--primary-dark)">${escapeHtml(t.title)}</td>
+          <td><span class="company-badge" style="background:#eef2f6;color:#475467">${escapeHtml(workName(t.workId))}</span><div style="font-size:11px;color:var(--muted);margin-top:2px">${escapeHtml(workClientName(t.clientId))}</div></td>
           <td>${sBadge(t.status)}</td>
           <td>${pBadge(t.prio)}</td>
           <td>
             <select class="tech-sel${unassigned ? ' tech-sel--unassigned' : ''}" onchange="assignWorkTech('${t.id}', this.value)">
-              ${TECHS.map(tc => `<option${tc === t.tech ? ' selected' : ''}>${tc}</option>`).join('')}
+              ${TECHS.map(tc => `<option${tc === t.tech ? ' selected' : ''}>${escapeHtml(tc)}</option>`).join('')}
             </select>
           </td>
         </tr>`;
@@ -135,12 +135,12 @@ function openWorkTicketForm(ticketId) {
       </div>
       <div class="form-row">
         <label class="form-label">Asunto</label>
-        <input class="form-input" id="wt-title" value="${t ? t.title : ''}" placeholder="Ej: Configurar firewall" />
+        <input class="form-input" id="wt-title" value="${t ? escapeHtml(t.title) : ''}" placeholder="Ej: Configurar firewall" />
       </div>
       <div class="form-row">
         <label class="form-label">Trabajo (proyecto)</label>
         <select class="form-input" id="wt-work">
-          ${WORKS.map(w => `<option value="${w.id}"${t && t.workId === w.id ? ' selected' : ''}>${w.name} — ${workClientName(w.clientId)}</option>`).join('')}
+          ${WORKS.map(w => `<option value="${w.id}"${t && t.workId === w.id ? ' selected' : ''}>${escapeHtml(w.name)} — ${escapeHtml(workClientName(w.clientId))}</option>`).join('')}
         </select>
       </div>
       <div class="form-row">
@@ -166,12 +166,12 @@ function openWorkTicketForm(ticketId) {
       <div class="form-row">
         <label class="form-label">Técnico</label>
         <select class="form-input" id="wt-tech">
-          ${TECHS.map(tc => `<option${t && t.tech === tc ? ' selected' : ''}>${tc}</option>`).join('')}
+          ${TECHS.map(tc => `<option${t && t.tech === tc ? ' selected' : ''}>${escapeHtml(tc)}</option>`).join('')}
         </select>
       </div>
       <div class="form-row">
         <label class="form-label">Descripción</label>
-        <textarea class="form-input" id="wt-desc" rows="2" placeholder="Detalle del ticket">${t ? t.desc : ''}</textarea>
+        <textarea class="form-input" id="wt-desc" rows="2" placeholder="Detalle del ticket">${t ? escapeHtml(t.desc) : ''}</textarea>
       </div>
       <div class="modal-actions">
         <button class="btn" onclick="closeModal()">Cancelar</button>
@@ -246,7 +246,7 @@ function renderWorkEmpresasTab() {
       ? `<div style="font-size:13px;color:var(--muted)">Sin trabajos registrados.</div>`
       : clWorks.map(w => `
           <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
-            <span style="flex:1;font-size:13px;font-weight:500">${w.name}</span>
+            <span style="flex:1;font-size:13px;font-weight:500">${escapeHtml(w.name)}</span>
             ${wBadge(w.status)}
             <div class="hora-prog" style="width:90px"><div class="hora-fill" style="width:${w.progress}%;background:#185FA5"></div></div>
             <span style="font-size:12px;color:var(--muted);width:38px;text-align:right">${w.progress}%</span>
@@ -256,8 +256,8 @@ function renderWorkEmpresasTab() {
       ? `<div style="font-size:13px;color:var(--muted)">Sin usuarios registrados.</div>`
       : clUsers.map(u => `
           <span style="display:inline-flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:12px;margin:3px">
-            <i class="ti ti-user" style="font-size:12px;color:var(--muted)"></i> ${u.name}
-            <span style="color:var(--muted);font-size:11px">(${u.user})</span>
+            <i class="ti ti-user" style="font-size:12px;color:var(--muted)"></i> ${escapeHtml(u.name)}
+            <span style="color:var(--muted);font-size:11px">(${escapeHtml(u.user)})</span>
           </span>`).join('');
 
     return `
@@ -265,7 +265,7 @@ function renderWorkEmpresasTab() {
         <div class="empresa-header" onclick="toggleWorkEmpresa(${cl.id})">
           <div class="empresa-header-left">
             <i class="ti ti-chevron-right empresa-chevron"></i>
-            <span class="empresa-name">${cl.name}</span>
+            <span class="empresa-name">${escapeHtml(cl.name)}</span>
             <span class="empresa-chips">
               <span class="echip echip-open">${activos} activos</span>
               <span class="echip echip-pending">${openTk} tickets abiertos</span>
@@ -306,7 +306,7 @@ function openWorkClientForm(clientId) {
       </div>
       <div class="form-row">
         <label class="form-label">Nombre de la empresa</label>
-        <input class="form-input" id="wc-name" value="${cl ? cl.name : ''}" placeholder="Ej: TechNova" />
+        <input class="form-input" id="wc-name" value="${cl ? escapeHtml(cl.name) : ''}" placeholder="Ej: TechNova" />
       </div>
       <div class="form-row">
         <label class="form-label">Sector / Rubro</label>
@@ -371,7 +371,7 @@ function renderWorkTrabajosTab() {
 
   const blocks = byClient.map(cl => `
     <div style="margin-bottom:22px">
-      <div style="font-size:11px;font-weight:bold;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)">${cl.name}</div>
+      <div style="font-size:11px;font-weight:bold;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)">${escapeHtml(cl.name)}</div>
       <div style="overflow-x:auto">
         <table class="tbl">
           <thead><tr><th>Trabajo</th><th style="width:120px">Estado</th><th style="width:160px">Avance</th><th style="width:170px">Fechas</th><th style="width:90px">Tickets</th><th style="width:60px"></th></tr></thead>
@@ -380,7 +380,7 @@ function renderWorkTrabajosTab() {
               const tk = WORK_TICKETS.filter(t => t.workId === w.id).length;
               return `
               <tr>
-                <td style="font-weight:500">${w.name}</td>
+                <td style="font-weight:500">${escapeHtml(w.name)}</td>
                 <td>${wBadge(w.status)}</td>
                 <td>
                   <div style="display:flex;align-items:center;gap:8px">
@@ -411,12 +411,12 @@ function openWorkForm(workId) {
       </div>
       <div class="form-row">
         <label class="form-label">Nombre del trabajo</label>
-        <input class="form-input" id="wk-name" value="${w ? w.name : ''}" placeholder="Ej: Migración a la nube" />
+        <input class="form-input" id="wk-name" value="${w ? escapeHtml(w.name) : ''}" placeholder="Ej: Migración a la nube" />
       </div>
       <div class="form-row">
         <label class="form-label">Empresa</label>
         <select class="form-input" id="wk-client">
-          ${WORK_CLIENTS.map(c => `<option value="${c.id}"${w && w.clientId === c.id ? ' selected' : ''}>${c.name}</option>`).join('')}
+          ${WORK_CLIENTS.map(c => `<option value="${c.id}"${w && w.clientId === c.id ? ' selected' : ''}>${escapeHtml(c.name)}</option>`).join('')}
         </select>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
@@ -443,7 +443,7 @@ function openWorkForm(workId) {
       </div>
       <div class="form-row">
         <label class="form-label">Descripción</label>
-        <textarea class="form-input" id="wk-desc" rows="2" placeholder="Detalle del trabajo">${w ? w.desc : ''}</textarea>
+        <textarea class="form-input" id="wk-desc" rows="2" placeholder="Detalle del trabajo">${w ? escapeHtml(w.desc) : ''}</textarea>
       </div>
       <div class="modal-actions">
         <button class="btn" onclick="closeModal()">Cancelar</button>
@@ -503,11 +503,11 @@ function renderWorkOrdersTab() {
   const rows = WORK_ORDERS.map(o => `
     <tr>
       <td style="color:var(--muted);font-size:12px">${o.id}</td>
-      <td style="font-weight:500">${o.titulo}</td>
-      <td>${workClientName(o.clientId)}</td>
+      <td style="font-weight:500">${escapeHtml(o.titulo)}</td>
+      <td>${escapeHtml(workClientName(o.clientId))}</td>
       <td>${orderTypeBadge(o.tipo)}</td>
       <td style="font-size:12px">${o.fecha ? formatDate(o.fecha) : '—'}</td>
-      <td style="font-size:12px;color:var(--muted)">${o.factura || '—'}</td>
+      <td style="font-size:12px;color:var(--muted)">${escapeHtml(o.factura || '—')}</td>
       <td><button class="btn btn-sm" onclick="openWorkOrderForm('${o.id}')"><i class="ti ti-edit"></i></button></td>
     </tr>`).join('');
 
@@ -535,14 +535,14 @@ function openWorkOrderForm(orderId) {
         <div class="form-row">
           <label class="form-label">Empresa</label>
           <select class="form-input" id="ot-client">
-            ${WORK_CLIENTS.map(c => `<option value="${c.id}"${o && o.clientId === c.id ? ' selected' : ''}>${c.name}</option>`).join('')}
+            ${WORK_CLIENTS.map(c => `<option value="${c.id}"${o && o.clientId === c.id ? ' selected' : ''}>${escapeHtml(c.name)}</option>`).join('')}
           </select>
         </div>
         <div class="form-row">
           <label class="form-label">Trabajo / proyecto (opcional)</label>
           <select class="form-input" id="ot-work">
             <option value="">— Sin proyecto —</option>
-            ${WORKS.map(w => `<option value="${w.id}"${o && o.workId === w.id ? ' selected' : ''}>${w.name} — ${workClientName(w.clientId)}</option>`).join('')}
+            ${WORKS.map(w => `<option value="${w.id}"${o && o.workId === w.id ? ' selected' : ''}>${escapeHtml(w.name)} — ${escapeHtml(workClientName(w.clientId))}</option>`).join('')}
           </select>
         </div>
       </div>
@@ -628,7 +628,7 @@ function openWorkOrderForm(orderId) {
         <div class="form-row">
           <label class="form-label">Técnico</label>
           <select class="form-input" id="ot-tech">
-            ${TECHS.map(tc => `<option${o && o.tecnico === tc ? ' selected' : ''}>${tc}</option>`).join('')}
+            ${TECHS.map(tc => `<option${o && o.tecnico === tc ? ' selected' : ''}>${escapeHtml(tc)}</option>`).join('')}
           </select>
         </div>
       </div>
@@ -738,7 +738,7 @@ function renderWorkUsersTab() {
     </div>
     ${byClient.map(cl => `
       <div style="margin-bottom:22px">
-        <div style="font-size:11px;font-weight:bold;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)">${cl.name}</div>
+        <div style="font-size:11px;font-weight:bold;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)">${escapeHtml(cl.name)}</div>
         ${cl.members.length === 0
           ? `<div style="font-size:13px;color:var(--muted);padding:6px 0">Sin usuarios — crea uno con el botón superior.</div>`
           : `<table class="tbl">
@@ -746,8 +746,8 @@ function renderWorkUsersTab() {
               <tbody>
                 ${cl.members.map(u => `
                   <tr>
-                    <td>${u.name}</td>
-                    <td style="color:var(--muted);font-size:12px">${u.user}</td>
+                    <td>${escapeHtml(u.name)}</td>
+                    <td style="color:var(--muted);font-size:12px">${escapeHtml(u.user)}</td>
                     <td>
                       <div style="display:flex;gap:6px">
                         <button class="btn btn-sm" onclick="openWorkUserForm(${u.id})"><i class="ti ti-edit"></i></button>
@@ -772,11 +772,11 @@ function openWorkUserForm(userId) {
       </div>
       <div class="form-row">
         <label class="form-label">Nombre completo</label>
-        <input class="form-input" id="wu-name" value="${u ? u.name : ''}" placeholder="Ej: Juan Pérez" />
+        <input class="form-input" id="wu-name" value="${u ? escapeHtml(u.name) : ''}" placeholder="Ej: Juan Pérez" />
       </div>
       <div class="form-row">
         <label class="form-label">Usuario (para iniciar sesión)</label>
-        <input class="form-input" id="wu-user" value="${u ? u.user : ''}" placeholder="Ej: juan.technova" autocomplete="off" />
+        <input class="form-input" id="wu-user" value="${u ? escapeHtml(u.user) : ''}" placeholder="Ej: juan.technova" autocomplete="off" />
       </div>
       <div class="form-row">
         <label class="form-label">${u ? 'Nueva contraseña (vacío = no cambiar)' : 'Contraseña'}</label>
@@ -785,7 +785,7 @@ function openWorkUserForm(userId) {
       <div class="form-row">
         <label class="form-label">Empresa</label>
         <select class="form-input" id="wu-client">
-          ${WORK_CLIENTS.map(c => `<option value="${c.id}"${u && u.clientId === c.id ? ' selected' : ''}>${c.name}</option>`).join('')}
+          ${WORK_CLIENTS.map(c => `<option value="${c.id}"${u && u.clientId === c.id ? ' selected' : ''}>${escapeHtml(c.name)}</option>`).join('')}
         </select>
       </div>
       <div class="modal-actions">
@@ -852,7 +852,7 @@ function renderWorkCalendarTab() {
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px">
       <select class="form-input" onchange="setWorkCalFilter(this.value)" style="max-width:210px;width:auto">
         <option value="-2"${workCalClient === -2 ? ' selected' : ''}>Todas las empresas</option>
-        ${WORK_CLIENTS.map(c => `<option value="${c.id}"${workCalClient === c.id ? ' selected' : ''}>${c.name}</option>`).join('')}
+        ${WORK_CLIENTS.map(c => `<option value="${c.id}"${workCalClient === c.id ? ' selected' : ''}>${escapeHtml(c.name)}</option>`).join('')}
       </select>
       <button class="btn btn-primary" onclick="openWorkEventForm(null, null)">
         <i class="ti ti-plus"></i> Programar visita
@@ -891,7 +891,7 @@ function renderWorkCalendarGrid(filteredEvents, isAdmin) {
       const clickFn = isAdmin ? `onclick="workCalDayClick(${d})"` : '';
       const chips = evs.slice(0, 2).map(ev => {
         const et = EVENT_TYPES[ev.type] || EVENT_TYPES.otro;
-        return `<div class="cal-chip" style="background:${et.bg};color:${et.color}" onclick="event.stopPropagation();openWorkEventDetail('${ev.id}')" title="${ev.title}">${ev.title}</div>`;
+        return `<div class="cal-chip" style="background:${et.bg};color:${et.color}" onclick="event.stopPropagation();openWorkEventDetail('${ev.id}')" title="${escapeHtml(ev.title)}">${escapeHtml(ev.title)}</div>`;
       }).join('');
       const more = evs.length > 2 ? `<div class="cal-more">+${evs.length - 2} más</div>` : '';
       return `<td class="cal-cell${isToday ? ' cal-today' : ''}" ${clickFn}><div class="cal-day-num${isToday ? ' cal-today-num' : ''}">${d}</div>${chips}${more}</td>`;
@@ -925,18 +925,18 @@ function openWorkEventDetail(id) {
   openModal(`
     <div class="modal" onclick="event.stopPropagation()">
       <div class="modal-title">
-        <span>${ev.title}</span>
+        <span>${escapeHtml(ev.title)}</span>
         <button class="btn btn-sm" onclick="closeModal()"><i class="ti ti-x"></i></button>
       </div>
       <div style="margin-bottom:14px"><span class="badge" style="background:${et.bg};color:${et.color}">${et.label}</span></div>
       <div class="detail-grid">
         <div><div class="form-label">Fecha</div><span style="font-size:13px">${formatDate(ev.date)}</span></div>
         <div><div class="form-label">Hora</div><span style="font-size:13px">${ev.time}</span></div>
-        <div><div class="form-label">Empresa</div><span style="font-size:13px">${workClientName(ev.clientId)}</span></div>
-        <div><div class="form-label">Trabajo</div><span style="font-size:13px">${workName(ev.workId)}</span></div>
-        <div><div class="form-label">Técnico</div><span style="font-size:13px">${ev.tech}</span></div>
+        <div><div class="form-label">Empresa</div><span style="font-size:13px">${escapeHtml(workClientName(ev.clientId))}</span></div>
+        <div><div class="form-label">Trabajo</div><span style="font-size:13px">${escapeHtml(workName(ev.workId))}</span></div>
+        <div><div class="form-label">Técnico</div><span style="font-size:13px">${escapeHtml(ev.tech)}</span></div>
       </div>
-      ${ev.desc ? `<div class="form-row"><div class="form-label">Descripción</div><div style="font-size:13px;line-height:1.5">${ev.desc}</div></div>` : ''}
+      ${ev.desc ? `<div class="form-row"><div class="form-label">Descripción</div><div style="font-size:13px;line-height:1.5">${escapeHtml(ev.desc)}</div></div>` : ''}
       <div class="modal-actions">
         <button class="btn" style="border-color:#E24B4A;color:#a42828;margin-right:auto" onclick="deleteWorkEvent('${ev.id}')">
           <i class="ti ti-trash"></i> Eliminar
@@ -960,7 +960,7 @@ function openWorkEventForm(date, eventId) {
       </div>
       <div class="form-row">
         <label class="form-label">Título</label>
-        <input class="form-input" id="we-title" value="${ev ? ev.title : ''}" placeholder="Ej: Visita de instalación" />
+        <input class="form-input" id="we-title" value="${ev ? escapeHtml(ev.title) : ''}" placeholder="Ej: Visita de instalación" />
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
         <div class="form-row">
@@ -981,18 +981,18 @@ function openWorkEventForm(date, eventId) {
       <div class="form-row">
         <label class="form-label">Trabajo (proyecto)</label>
         <select class="form-input" id="we-work">
-          ${WORKS.map(w => `<option value="${w.id}"${ev && ev.workId === w.id ? ' selected' : ''}>${w.name} — ${workClientName(w.clientId)}</option>`).join('')}
+          ${WORKS.map(w => `<option value="${w.id}"${ev && ev.workId === w.id ? ' selected' : ''}>${escapeHtml(w.name)} — ${escapeHtml(workClientName(w.clientId))}</option>`).join('')}
         </select>
       </div>
       <div class="form-row">
         <label class="form-label">Técnico</label>
         <select class="form-input" id="we-tech">
-          ${TECHS.map(tc => `<option${ev && ev.tech === tc ? ' selected' : ''}>${tc}</option>`).join('')}
+          ${TECHS.map(tc => `<option${ev && ev.tech === tc ? ' selected' : ''}>${escapeHtml(tc)}</option>`).join('')}
         </select>
       </div>
       <div class="form-row">
         <label class="form-label">Descripción</label>
-        <textarea class="form-input" id="we-desc" rows="2" placeholder="Detalle opcional">${ev ? ev.desc : ''}</textarea>
+        <textarea class="form-input" id="we-desc" rows="2" placeholder="Detalle opcional">${ev ? escapeHtml(ev.desc) : ''}</textarea>
       </div>
       <div class="modal-actions">
         <button class="btn" onclick="closeModal()">Cancelar</button>

@@ -255,7 +255,7 @@ function renderCalendarGrid(filteredEvents, isAdmin) {
       const clickFn = isAdmin ? `onclick="calDayClick(${d})"` : '';
       const chips   = evs.slice(0, 2).map(ev => {
         const et = EVENT_TYPES[ev.type] || EVENT_TYPES.otro;
-        return `<div class="cal-chip" style="background:${et.bg};color:${et.color}" onclick="event.stopPropagation();openEventDetail('${ev.id}')" title="${ev.title}">${ev.title}</div>`;
+        return `<div class="cal-chip" style="background:${et.bg};color:${et.color}" onclick="event.stopPropagation();openEventDetail('${ev.id}')" title="${escapeHtml(ev.title)}">${escapeHtml(ev.title)}</div>`;
       }).join('');
       const more = evs.length > 2 ? `<div class="cal-more">+${evs.length - 2} más</div>` : '';
       return `<td class="cal-cell${isToday ? ' cal-today' : ''}" ${clickFn}><div class="cal-day-num${isToday ? ' cal-today-num' : ''}">${d}</div>${chips}${more}</td>`;
@@ -283,6 +283,20 @@ function formatDate(dateStr) {
 }
 
 // ── HELPERS ────────────────────────────────────────────────────────────────
+
+// Escapa texto para insertarlo de forma segura dentro de innerHTML / atributos.
+// Previene XSS almacenado: cualquier dato escrito por el usuario (títulos de
+// ticket, nombres de empresa/usuario, comentarios) DEBE pasar por aquí antes
+// de interpolarse en una plantilla HTML.
+function escapeHtml(value) {
+  if (value === null || value === undefined) return '';
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
 
 function pBadge(p) {
   const cls = { low: 'b-blue', medium: 'b-blue', high: 'b-amber', critical: 'b-red' };

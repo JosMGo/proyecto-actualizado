@@ -74,10 +74,10 @@ function renderClientTrabajo() {
               : myTickets.map(t => `
                 <tr data-status="${t.status}">
                   <td style="color:var(--muted)">${t.id}</td>
-                  <td>${t.title}</td>
-                  <td><span class="company-badge" style="background:#eef2f6;color:#475467">${workName(t.workId)}</span>${t.cat ? `<div style="font-size:11px;color:var(--muted);margin-top:2px">${t.cat}</div>` : ''}</td>
+                  <td>${escapeHtml(t.title)}</td>
+                  <td><span class="company-badge" style="background:#eef2f6;color:#475467">${escapeHtml(workName(t.workId))}</span>${t.cat ? `<div style="font-size:11px;color:var(--muted);margin-top:2px">${escapeHtml(t.cat)}</div>` : ''}</td>
                   <td>${sBadge(t.status)}</td>
-                  <td>${t.tech}</td>
+                  <td>${escapeHtml(t.tech)}</td>
                 </tr>`).join('')}
           </tbody>
         </table>
@@ -128,7 +128,7 @@ function openNewWorkTicket() {
       <div class="form-row">
         <label class="form-label">Trabajo (proyecto)</label>
         <select class="form-input" id="cwt-work">
-          ${myWorks.map(w => `<option value="${w.id}">${w.name}</option>`).join('')}
+          ${myWorks.map(w => `<option value="${w.id}">${escapeHtml(w.name)}</option>`).join('')}
         </select>
       </div>
 
@@ -354,6 +354,7 @@ function renderOrdersHistory(orders) {
 
 function _row(label, value) {
   if (!value) return '';
+  value = escapeHtml(value);
   return `<div class="form-row"><div class="form-label">${label}</div><div style="font-size:13px;line-height:1.5">${value}</div></div>`;
 }
 
@@ -365,21 +366,21 @@ function openOrderDetail(id) {
   openModal(`
     <div class="modal modal-lg" onclick="event.stopPropagation()">
       <div class="modal-title">
-        <span>${o.titulo}</span>
+        <span>${escapeHtml(o.titulo)}</span>
         <button class="btn btn-sm" onclick="closeModal()"><i class="ti ti-x"></i></button>
       </div>
 
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
         ${orderTypeBadge(o.tipo)}
-        <span class="badge" style="background:#eef2f6;color:#475467">${o.categoria || 'Otro'}</span>
+        <span class="badge" style="background:#eef2f6;color:#475467">${escapeHtml(o.categoria || 'Otro')}</span>
         ${o.fecha ? `<span class="badge" style="background:#ddf5df;color:#1c6b2a">${formatDate(o.fecha)}</span>` : ''}
       </div>
 
       <div class="detail-grid">
-        <div><div class="form-label">Empresa</div><span style="font-size:13px">${workClientName(o.clientId)}</span></div>
-        <div><div class="form-label">Trabajo / proyecto</div><span style="font-size:13px">${o.workId ? workName(o.workId) : '—'}</span></div>
-        <div><div class="form-label">Técnico</div><span style="font-size:13px">${o.tecnico || '—'}</span></div>
-        <div><div class="form-label">N° de factura</div><span style="font-size:13px">${o.factura || '—'}</span></div>
+        <div><div class="form-label">Empresa</div><span style="font-size:13px">${escapeHtml(workClientName(o.clientId))}</span></div>
+        <div><div class="form-label">Trabajo / proyecto</div><span style="font-size:13px">${o.workId ? escapeHtml(workName(o.workId)) : '—'}</span></div>
+        <div><div class="form-label">Técnico</div><span style="font-size:13px">${escapeHtml(o.tecnico || '—')}</span></div>
+        <div><div class="form-label">N° de factura</div><span style="font-size:13px">${escapeHtml(o.factura || '—')}</span></div>
       </div>
 
       ${_row('Requerimientos', o.requerimientos)}
@@ -389,8 +390,8 @@ function openOrderDetail(id) {
         <div style="border:1px dashed var(--border);border-radius:8px;padding:12px;margin-bottom:14px">
           <div style="font-size:11px;font-weight:bold;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px"><i class="ti ti-device-desktop"></i> Datos del equipo</div>
           <div class="detail-grid">
-            <div><div class="form-label">Modelo</div><span style="font-size:13px">${o.modelo || '—'}</span></div>
-            <div><div class="form-label">N° de serie</div><span style="font-size:13px">${o.serie || '—'}</span></div>
+            <div><div class="form-label">Modelo</div><span style="font-size:13px">${escapeHtml(o.modelo || '—')}</span></div>
+            <div><div class="form-label">N° de serie</div><span style="font-size:13px">${escapeHtml(o.serie || '—')}</span></div>
             <div><div class="form-label">Fecha de entrada</div><span style="font-size:13px">${o.fechaEntrada ? formatDate(o.fechaEntrada) : '—'}</span></div>
             <div><div class="form-label">Fecha de salida</div><span style="font-size:13px">${o.fechaSalida ? formatDate(o.fechaSalida) : '—'}</span></div>
           </div>
@@ -467,7 +468,7 @@ function renderClientWorkCalendarGrid(items) {
         const bg = isOrder ? '#ddf5df' : '#dceeff';
         const fg = isOrder ? '#1c6b2a' : '#185FA5';
         const onclick = isOrder ? `openOrderDetail('${it.id}')` : '';
-        return `<div class="cal-chip" style="background:${bg};color:${fg}" ${onclick ? `onclick="event.stopPropagation();${onclick}"` : ''} title="${it.title}">${it.title}</div>`;
+        return `<div class="cal-chip" style="background:${bg};color:${fg}" ${onclick ? `onclick="event.stopPropagation();${onclick}"` : ''} title="${escapeHtml(it.title)}">${escapeHtml(it.title)}</div>`;
       }).join('');
       const more = evs.length > 2 ? `<div class="cal-more">+${evs.length - 2} más</div>` : '';
       return `<td class="cal-cell${isToday ? ' cal-today' : ''}"><div class="cal-day-num${isToday ? ' cal-today-num' : ''}">${d}</div>${chips}${more}</td>`;

@@ -97,11 +97,11 @@ function renderClient() {
           <tbody>
             ${my.map(t => `
               <tr data-status="${t.status}" style="cursor:pointer" onclick="openDetail('${t.id}')">
-                <td style="color:var(--muted)">${t.id}</td>
-                <td>${t.title}</td>
+                <td style="color:var(--muted)">${escapeHtml(t.id)}</td>
+                <td>${escapeHtml(t.title)}</td>
                 <td>${pBadge(t.prio)}</td>
                 <td>${sBadge(t.status)}</td>
-                <td>${t.tech}</td>
+                <td>${escapeHtml(t.tech)}</td>
               </tr>
             `).join('')}
           </tbody>
@@ -135,7 +135,7 @@ function openEventDetail(id) {
   openModal(`
     <div class="modal" onclick="event.stopPropagation()">
       <div class="modal-title">
-        <span>${ev.title}</span>
+        <span>${escapeHtml(ev.title)}</span>
         <button class="btn btn-sm" onclick="closeModal()"><i class="ti ti-x"></i></button>
       </div>
       <div style="margin-bottom:14px">
@@ -144,10 +144,10 @@ function openEventDetail(id) {
       <div class="detail-grid">
         <div><div class="form-label">Fecha</div><span style="font-size:13px">${formatDate(ev.date)}</span></div>
         <div><div class="form-label">Hora</div><span style="font-size:13px">${ev.time}</span></div>
-        <div><div class="form-label">Técnico</div><span style="font-size:13px">${ev.tech}</span></div>
+        <div><div class="form-label">Técnico</div><span style="font-size:13px">${escapeHtml(ev.tech)}</span></div>
         <div><div class="form-label">Tipo</div><span class="badge" style="background:${et.bg};color:${et.color}">${et.label}</span></div>
       </div>
-      ${ev.desc ? `<div class="form-row"><div class="form-label">Descripción</div><div style="font-size:13px;line-height:1.5">${ev.desc}</div></div>` : ''}
+      ${ev.desc ? `<div class="form-row"><div class="form-label">Descripción</div><div style="font-size:13px;line-height:1.5">${escapeHtml(ev.desc)}</div></div>` : ''}
       <div class="modal-actions">
         <button class="btn" onclick="closeModal()">Cerrar</button>
       </div>
@@ -368,21 +368,21 @@ function openDetail(id) {
   openModal(`
     <div class="modal" onclick="event.stopPropagation()">
       <div class="modal-title">
-        <span>${t.id} — ${t.title}</span>
+        <span>${escapeHtml(t.id)} — ${escapeHtml(t.title)}</span>
         <button class="btn btn-sm" onclick="closeModal()"><i class="ti ti-x"></i></button>
       </div>
 
       <div class="detail-grid">
         <div><div class="form-label">Estado</div>${sBadge(t.status)}</div>
         <div><div class="form-label">Prioridad</div>${pBadge(t.prio)}</div>
-        <div><div class="form-label">Técnico</div><span style="font-size:13px">${t.tech}</span></div>
+        <div><div class="form-label">Técnico</div><span style="font-size:13px">${escapeHtml(t.tech)}</span></div>
         <div><div class="form-label">Horas</div><span style="font-size:13px">${t.hours}h</span></div>
       </div>
 
       ${t.desc ? `
         <div class="form-row">
           <div class="form-label">Descripción</div>
-          <div style="font-size:13px; line-height:1.5">${t.desc}</div>
+          <div style="font-size:13px; line-height:1.5">${escapeHtml(t.desc)}</div>
         </div>
       ` : ''}
 
@@ -428,7 +428,9 @@ Descripción: ${t.desc || 'Sin descripción'}`
     });
 
     const data = await response.json();
-    box.innerHTML = data.content?.[0]?.text || 'Sin respuesta de la IA.';
+    // textContent (no innerHTML): la respuesta de la IA puede reflejar datos
+    // escritos por el usuario; renderizarla como HTML sería un vector XSS.
+    box.textContent = data.content?.[0]?.text || 'Sin respuesta de la IA.';
 
   } catch (err) {
     console.error(err);
