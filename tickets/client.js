@@ -16,17 +16,18 @@ function render() {
 function renderClient() {
   const ci  = clientIdx();
   const cl  = CLIENTS[ci];
-  const my  = tickets.filter(t => t.client === ci);
+  const my  = tickets.filter(t => t.client === ci);          // histórico completo (para la gráfica)
+  const myMonth = getClientMonthTickets(ci);                 // tickets del mes en curso (+ abiertos arrastrados)
   const monthUsed = getCurrentMonthTicketHours(ci);
   const extraHours = getMonthlyExtraHours(ci);
-  const pct = Math.round(cl.used / cl.hours * 100);
+  const pct = Math.round(monthUsed / cl.hours * 100);
   const barColor = pct >= 90 ? '#E24B4A' : pct >= 70 ? '#EF9F27' : '#185FA5';
 
-  const open    = my.filter(t => t.status === 'open').length;
-  const closed  = my.filter(t => t.status === 'closed').length;
-  const pending = my.filter(t => t.status === 'pending').length;
+  const open    = myMonth.filter(t => t.status === 'open').length;
+  const closed  = myMonth.filter(t => t.status === 'closed').length;
+  const pending = myMonth.filter(t => t.status === 'pending').length;
 
-  const remaining      = cl.hours - cl.used;
+  const remaining      = cl.hours - monthUsed;
   const remainingColor = remaining <= 0 ? '#E24B4A' : remaining <= cl.hours * 0.2 ? '#EF9F27' : '#1c6b2a';
 
   document.getElementById('main-area').innerHTML = `
@@ -36,8 +37,8 @@ function renderClient() {
         <div class="metric-val">${cl.hours}h</div>
       </div>
       <div class="metric">
-        <div class="metric-label">Horas usadas</div>
-        <div class="metric-val" style="color:${barColor}">${cl.used}h</div>
+        <div class="metric-label">Horas usadas <span style="font-weight:400;color:var(--muted)">(mes actual)</span></div>
+        <div class="metric-val" style="color:${barColor}">${monthUsed}h</div>
         <div class="progress-bar">
           <div class="progress-fill" style="width:${Math.min(pct,100)}%; background:${barColor}"></div>
         </div>
@@ -70,7 +71,7 @@ function renderClient() {
       </div>
 
       <div class="tabs">
-        <div class="tab active" onclick="filterTab(this,'all')">Todos (${my.length})</div>
+        <div class="tab active" onclick="filterTab(this,'all')">Todos (${myMonth.length})</div>
         <div class="tab" onclick="filterTab(this,'open')">Abiertos (${open})</div>
         <div class="tab" onclick="filterTab(this,'pending')">En proceso (${pending})</div>
         <div class="tab" onclick="filterTab(this,'closed')">Cerrados (${closed})</div>
@@ -95,7 +96,7 @@ function renderClient() {
             </tr>
           </thead>
           <tbody>
-            ${my.map(t => `
+            ${myMonth.map(t => `
               <tr data-status="${t.status}" style="cursor:pointer" onclick="openDetail('${t.id}')">
                 <td style="color:var(--muted)">${escapeHtml(t.id)}</td>
                 <td>${escapeHtml(t.title)}</td>
@@ -166,10 +167,12 @@ const CAT_COLORS = {
 };
 
 function renderMonthlyChart(cl, myTickets) {
-  const max  = Math.max(...cl.monthly, 1);
-  const year = new Date().getFullYear();
+  const year    = new Date().getFullYear();
+  const vm      = visibleMonthCount();               // meses a mostrar (hasta el actual)
+  const visible = cl.monthly.slice(0, vm);           // solo Ene…mes actual
+  const max     = Math.max(...visible, 1);
 
-  const bars = cl.monthly.map((h, i) => {
+  const bars = visible.map((h, i) => {
     const pct   = Math.round((h / max) * 100);
     const color = h >= max * 0.9 ? '#E24B4A' : h >= max * 0.7 ? '#EF9F27' : '#185FA5';
     return `
@@ -182,17 +185,17 @@ function renderMonthlyChart(cl, myTickets) {
       </div>`;
   }).join('');
 
-  const total = cl.monthly.reduce((a, b) => a + b, 0);
-  const avg   = (total / cl.monthly.length).toFixed(1);
+  const total = visible.reduce((a, b) => a + b, 0);
+  const avg   = (total / visible.length).toFixed(1);
 
   // ── Desglose por tipo de trabajo ──────────────────────────
   const catTotals = {};
-  const catByMonth = Array.from({ length: 6 }, () => ({}));
+  const catByMonth = Array.from({ length: 12 }, () => ({}));
 
   (myTickets || []).forEach(t => {
     if (!t.hours || !t.createdAt) return;
     const m = new Date(t.createdAt).getMonth();
-    if (m < 0 || m > 5) return;
+    if (m < 0 || m > 11) return;
     const cat = t.cat || 'Otro';
     catTotals[cat] = (catTotals[cat] || 0) + t.hours;
     catByMonth[m][cat] = (catByMonth[m][cat] || 0) + t.hours;
@@ -203,7 +206,7 @@ function renderMonthlyChart(cl, myTickets) {
   const catRows = sortedCats.map(([cat, total]) => {
     const color   = CAT_COLORS[cat] || '#667085';
     const catPct  = cl.used > 0 ? Math.round((total / cl.used) * 100) : 0;
-    const monthly = MONTHS.map((m, i) => {
+    const monthly = MONTHS.slice(0, vm).map((m, i) => {
       const h = catByMonth[i][cat] || 0;
       return `<td style="text-align:center;font-size:12px;color:${h > 0 ? color : 'var(--muted)'}">${h > 0 ? h + 'h' : '—'}</td>`;
     }).join('');
@@ -226,9 +229,9 @@ function renderMonthlyChart(cl, myTickets) {
       <div class="card-head">
         <span class="card-title"><i class="ti ti-list-details"></i> Trabajo realizado por tipo</span>
         <div style="display:flex;align-items:center;gap:10px">
-          <span style="font-size:12px;color:var(--muted)">Ene – Jun ${year}</span>
+          <span style="font-size:12px;color:var(--muted)">${visibleMonthsLabel()}</span>
           <button class="btn btn-secondary" onclick="downloadHoursReportPDF()">
-            <i class="ti ti-file-type-pdf"></i> Descargar PDF
+            <i class="ti ti-file-type-pdf"></i> Descargar PDF del mes
           </button>
         </div>
       </div>
@@ -237,7 +240,7 @@ function renderMonthlyChart(cl, myTickets) {
           <thead>
             <tr>
               <th>Categoría</th>
-              ${MONTHS.map(m => `<th style="text-align:center">${m}</th>`).join('')}
+              ${MONTHS.slice(0, vm).map(m => `<th style="text-align:center">${m}</th>`).join('')}
               <th style="text-align:right">Total</th>
               <th style="text-align:right">%</th>
             </tr>
@@ -251,7 +254,7 @@ function renderMonthlyChart(cl, myTickets) {
     <div class="card">
       <div class="card-head">
         <span class="card-title"><i class="ti ti-chart-bar"></i> Horas por mes</span>
-        <span style="font-size:12px; color:var(--muted)">Ene – Jun ${year} &nbsp;·&nbsp; Promedio: <strong>${avg}h</strong></span>
+        <span style="font-size:12px; color:var(--muted)">${visibleMonthsLabel()} &nbsp;·&nbsp; Promedio: <strong>${avg}h</strong></span>
       </div>
       <div class="monthly-chart">${bars}</div>
     </div>
@@ -448,21 +451,26 @@ function downloadHoursReportPDF() {
   const ci = clientIdx();
   const cl = CLIENTS[ci];
   if (!cl) return;
-  const my = tickets.filter(t => t.client === ci);
+  // Reporte del MES ACTUAL: tickets creados o cerrados en el mes en curso.
+  const my = getClientStrictMonthTickets(ci);
+  const now       = new Date();
+  const monthLbl  = `${MONTH_NAMES[now.getMonth()]} ${now.getFullYear()}`;
+  const monthUsed = my.reduce((sum, t) => sum + (Number(t.hours) || 0), 0);
 
   const doc    = new JsPDF({ unit: 'pt', format: 'a4' });
   const pageW  = doc.internal.pageSize.getWidth();
   const pageH  = doc.internal.pageSize.getHeight();
   const margin = 48;
   pdfEnableWatermark(doc);
-  let y = pdfBrandHeader(doc, 'Reporte de soporte por horas');
+  let y = pdfBrandHeader(doc, `Reporte de soporte por horas — ${monthLbl}`);
 
   doc.setFont('helvetica', 'bold'); doc.setFontSize(13);
   doc.text(cl.name, margin, y); y += 22;
 
-  const pct = cl.hours > 0 ? Math.round(cl.used / cl.hours * 100) : 0;
+  const pct = cl.hours > 0 ? Math.round(monthUsed / cl.hours * 100) : 0;
   doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(90, 90, 90);
-  doc.text(`Horas contratadas: ${cl.hours}h     Usadas: ${cl.used}h (${pct}%)     Restantes: ${Math.max(0, cl.hours - cl.used)}h`, margin, y);
+  doc.text(`Mes: ${monthLbl}`, margin, y); y += 15;
+  doc.text(`Horas contratadas: ${cl.hours}h     Usadas: ${monthUsed}h (${pct}%)     Restantes: ${Math.max(0, cl.hours - monthUsed)}h`, margin, y);
   y += 20;
 
   const section = (title) => {
@@ -473,30 +481,24 @@ function downloadHoursReportPDF() {
     doc.setFont('helvetica', 'normal'); doc.setTextColor(40, 40, 40); doc.setFontSize(10);
   };
 
-  // Horas por mes
-  section('Horas por mes');
-  const monthsLine = (cl.monthly || []).map((h, i) => `${MONTHS[i]}: ${h || 0}h`).join('     ');
-  const ml = doc.splitTextToSize(monthsLine || 'Sin datos', pageW - margin * 2);
-  doc.text(ml, margin, y); y += ml.length * 14 + 8;
-
-  // Desglose por tipo
+  // Desglose por tipo (solo el mes actual)
   const catTotals = {};
   my.forEach(t => { if (!t.hours) return; const c = t.cat || 'Otro'; catTotals[c] = (catTotals[c] || 0) + t.hours; });
   const sorted = Object.entries(catTotals).sort((a, b) => b[1] - a[1]);
   if (sorted.length) {
     section('Trabajo realizado por tipo');
     sorted.forEach(([cat, tot]) => {
-      const p = cl.used > 0 ? Math.round(tot / cl.used * 100) : 0;
+      const p = monthUsed > 0 ? Math.round(tot / monthUsed * 100) : 0;
       if (y > pageH - 70) { doc.addPage(); y = margin; }
       doc.text(`•  ${cat}: ${tot}h (${p}%)`, margin, y); y += 14;
     });
     y += 8;
   }
 
-  // Lista de tickets
-  section(`Tickets (${my.length})`);
+  // Lista de tickets del mes
+  section(`Tickets del mes (${my.length})`);
   const statusLbl = { open: 'Abierto', pending: 'En proceso', closed: 'Cerrado' };
-  if (my.length === 0) { doc.text('Sin tickets registrados.', margin, y); y += 14; }
+  if (my.length === 0) { doc.text('Sin tickets registrados este mes.', margin, y); y += 14; }
   my.forEach(t => {
     if (y > pageH - 60) { doc.addPage(); y = margin; }
     doc.setFont('helvetica', 'bold'); doc.setTextColor(20, 20, 20); doc.setFontSize(10);
@@ -512,7 +514,7 @@ function downloadHoursReportPDF() {
   doc.setFont('helvetica', 'normal'); doc.setTextColor(140, 140, 140); doc.setFontSize(9);
   doc.text(`Generado el ${formatDate(new Date().toISOString().slice(0, 10))} · SoporteIT`, margin, fy);
 
-  doc.save(`Reporte_horas_${cl.name.replace(/\s+/g, '_')}.pdf`);
+  doc.save(`Reporte_horas_${monthLbl.replace(/\s+/g, '_')}_${cl.name.replace(/\s+/g, '_')}.pdf`);
 }
 
 // ── INIT ───────────────────────────────────────────────────────────────────

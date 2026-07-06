@@ -41,14 +41,32 @@ function nextClientId() {
 async function dbUpsertClient(c) {
   const { error } = await _sb.from('clients').upsert({
     id: c.id, name: c.name, hours: c.hours,
-    monthly: c.monthly || [0, 0, 0, 0, 0, 0]
+    monthly: c.monthly || emptyMonthly()
   });
   if (error) console.error('dbUpsertClient:', error);
 }
 
 // ── DATOS COMPARTIDOS ───────────────────────────────────────────────────────
 
-const MONTHS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'];
+const MONTHS = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+
+// Cuántos meses mostrar en las gráficas: desde Enero hasta el mes actual (inclusive).
+// En julio → 7 (Ene–Jul); crece solo cada mes hasta 12 en diciembre; el 1-ene vuelve a 1.
+function visibleMonthCount(referenceDate = new Date()) {
+  return referenceDate.getMonth() + 1;
+}
+
+// Etiqueta del rango visible, p.ej. "Ene – Jul 2026".
+function visibleMonthsLabel(referenceDate = new Date()) {
+  const n = visibleMonthCount(referenceDate);
+  const range = n <= 1 ? MONTHS[0] : `${MONTHS[0]} – ${MONTHS[n - 1]}`;
+  return `${range} ${referenceDate.getFullYear()}`;
+}
+
+// Array mensual vacío (12 posiciones, una por mes del año).
+function emptyMonthly() {
+  return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+}
 
 let CLIENTS = [];
 
@@ -127,7 +145,7 @@ async function loadData() {
 
   if (cr.data) CLIENTS = cr.data.map(c => ({
     id: c.id, name: c.name, hours: c.hours,
-    monthly: Array.isArray(c.monthly) ? c.monthly : [0, 0, 0, 0, 0, 0]
+    monthly: Array.isArray(c.monthly) ? c.monthly : emptyMonthly()
   }));
 
   if (tr.data) {
@@ -136,7 +154,8 @@ async function loadData() {
         id: t.id, title: t.title, prio: t.prio, status: t.status,
         tech: t.tech, hours: Number(t.hours), client: t.client_id,
         cat: t.cat || '', desc: t.description || '',
-        createdAt: t.created_at || null
+        createdAt: t.created_at || null,
+        closedAt: t.closed_at || null
       }))
       .sort((a, b) => {
         const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
@@ -152,11 +171,11 @@ async function loadData() {
     CLIENTS.forEach(cl => {
       const myTickets = tickets.filter(t => t.client === cl.id);
       cl.used = myTickets.reduce((sum, t) => sum + Number(t.hours), 0);
-      cl.monthly = [0, 0, 0, 0, 0, 0];
+      cl.monthly = emptyMonthly();
       myTickets.forEach(t => {
         if (!t.createdAt) return;
         const m = new Date(t.createdAt).getMonth();
-        if (m >= 0 && m <= 5) cl.monthly[m] += Number(t.hours);
+        if (m >= 0 && m <= 11) cl.monthly[m] += Number(t.hours);
       });
     });
   }
@@ -182,10 +201,40 @@ function isSameMonth(dateValue, referenceDate = new Date()) {
   return parsed.getFullYear() === referenceDate.getFullYear() && parsed.getMonth() === referenceDate.getMonth();
 }
 
+// ── PERIODO MENSUAL DE TICKETS (reinicio el día 1 de cada mes) ────────────────
+// Un ticket "pertenece" al mes de referencia si:
+//   • sigue abierto/en proceso (status !== 'closed') → se arrastra hasta cerrarse, o
+//   • se cerró dentro de ese mes (por closed_at; si falta, se usa created_at).
+// Así, al llegar el día 1 los tickets cerrados de meses anteriores dejan de contar
+// y el cliente arranca el nuevo mes con horas y tickets en cero.
+function isTicketInMonth(ticket, referenceDate = new Date()) {
+  if (!ticket) return false;
+  if (ticket.status !== 'closed') return true;          // abierto → se arrastra al mes actual
+  const stamp = ticket.closedAt || ticket.createdAt;    // cerrado → cuenta en su mes de cierre
+  return stamp ? isSameMonth(stamp, referenceDate) : false;
+}
+
+// Tickets de un cliente que cuentan en el mes de referencia (mes actual + abiertos arrastrados).
+function getClientMonthTickets(clientId, referenceDate = new Date()) {
+  return tickets.filter(t => t.client === clientId && isTicketInMonth(t, referenceDate));
+}
+
 function getCurrentMonthTicketHours(clientId, referenceDate = new Date()) {
-  return tickets
-    .filter(t => t.client === clientId && t.createdAt && isSameMonth(t.createdAt, referenceDate))
+  return getClientMonthTickets(clientId, referenceDate)
     .reduce((sum, t) => sum + (Number(t.hours) || 0), 0);
+}
+
+// Pertenencia ESTRICTA al mes (para el reporte PDF mensual): el ticket fue
+// creado en el mes de referencia O cerrado en él. No arrastra abiertos previos.
+function isTicketStrictlyInMonth(ticket, referenceDate = new Date()) {
+  if (!ticket) return false;
+  if (ticket.createdAt && isSameMonth(ticket.createdAt, referenceDate)) return true;
+  if (ticket.status === 'closed' && ticket.closedAt && isSameMonth(ticket.closedAt, referenceDate)) return true;
+  return false;
+}
+
+function getClientStrictMonthTickets(clientId, referenceDate = new Date()) {
+  return tickets.filter(t => t.client === clientId && isTicketStrictlyInMonth(t, referenceDate));
 }
 
 function getMonthlyExtraHours(clientId, referenceDate = new Date()) {

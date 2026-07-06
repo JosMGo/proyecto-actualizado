@@ -107,14 +107,15 @@ function renderAdmin() {
         </button>
       </div>
       ${CLIENTS.map(cl => {
-        const pct = Math.round(cl.used / cl.hours * 100);
+        const monthUsed = getCurrentMonthTicketHours(cl.id);
+        const pct = Math.round(monthUsed / cl.hours * 100);
         const c   = pct >= 90 ? '#E24B4A' : pct >= 70 ? '#EF9F27' : '#185FA5';
         const extraHours = getMonthlyExtraHours(cl.id);
         return `
           <div class="hora-bar" style="display:flex;align-items:center;gap:10px">
             <div class="hora-name" style="flex:0 0 140px">${escapeHtml(cl.name)}</div>
-            <div class="hora-prog" style="flex:1"><div class="hora-fill" style="width:${pct}%; background:${c}"></div></div>
-            <div class="hora-val" style="flex:0 0 160px">${cl.used}/${cl.hours}h (${pct}%)${extraHours > 0 ? ` <span class="company-extra">+${extraHours}h extras</span>` : ''}</div>
+            <div class="hora-prog" style="flex:1"><div class="hora-fill" style="width:${Math.min(pct,100)}%; background:${c}"></div></div>
+            <div class="hora-val" style="flex:0 0 160px">${monthUsed}/${cl.hours}h (${pct}%)${extraHours > 0 ? ` <span class="company-extra">+${extraHours}h extras</span>` : ''}</div>
             <button class="btn btn-sm" onclick="openClientForm(${cl.id})" style="flex-shrink:0"><i class="ti ti-edit"></i></button>
           </div>
         `;
@@ -288,7 +289,8 @@ function renderEmpresasTab() {
     const openTk     = clTickets.filter(t => t.status === 'open').length;
     const pendingTk  = clTickets.filter(t => t.status === 'pending').length;
     const closedTk   = clTickets.filter(t => t.status === 'closed').length;
-    const pct        = cl.hours > 0 ? Math.round(cl.used / cl.hours * 100) : 0;
+    const monthUsed  = getCurrentMonthTicketHours(cl.id);
+    const pct        = cl.hours > 0 ? Math.round(monthUsed / cl.hours * 100) : 0;
     const barColor   = pct >= 90 ? '#E24B4A' : pct >= 70 ? '#EF9F27' : '#185FA5';
     const isOpen     = openCompanies.has(cl.id);
 
@@ -339,8 +341,8 @@ function renderEmpresasTab() {
             </span>
           </div>
           <div class="empresa-header-right">
-            <span style="font-size:12px;color:var(--muted)">${cl.used}/${cl.hours}h</span>
-            <div class="hora-prog" style="width:100px"><div class="hora-fill" style="width:${pct}%;background:${barColor}"></div></div>
+            <span style="font-size:12px;color:var(--muted)">${monthUsed}/${cl.hours}h</span>
+            <div class="hora-prog" style="width:100px"><div class="hora-fill" style="width:${Math.min(pct,100)}%;background:${barColor}"></div></div>
             <button class="btn btn-sm" onclick="event.stopPropagation();openClientForm(${cl.id})">
               <i class="ti ti-edit"></i>
             </button>
@@ -464,6 +466,8 @@ function changeStatus(id, status) {
   const t = tickets.find(tk => tk.id === id);
   if (t) {
     t.status = status;
+    // Espejo local del trigger de BD: fija/limpia closed_at para el cálculo mensual sin recargar.
+    t.closedAt = status === 'closed' ? new Date().toISOString() : null;
     dbUpdateTicket(id, { status });
     const cl = CLIENTS.find(c => c.id === t.client);
     notifyWhatsApp('status_change', t, cl?.name || '—', cl?.phone || null);
@@ -536,6 +540,7 @@ async function confirmClose(id) {
   const prevHours = t.hours;
   t.hours  = hours;
   t.status = 'closed';
+  t.closedAt = new Date().toISOString();   // espejo local del trigger closed_at
 
   // Recalcular horas usadas del cliente
   const cl = CLIENTS.find(c => c.id === t.client);
@@ -544,7 +549,7 @@ async function confirmClose(id) {
     // Actualizar gráfica mensual: restar horas anteriores del mes del ticket y sumar nuevas
     if (t.createdAt) {
       const m = new Date(t.createdAt).getMonth();
-      if (m >= 0 && m <= 5) {
+      if (m >= 0 && m <= 11) {
         cl.monthly[m] = Math.max(0, (cl.monthly[m] || 0) - prevHours + hours);
       }
     }
@@ -968,7 +973,7 @@ async function saveClient(clientId) {
       targetClient = CLIENTS[idx];
     }
   } else {
-    targetClient = { id: nextClientId(), name, hours, monthly: [0, 0, 0, 0, 0, 0], used: 0 };
+    targetClient = { id: nextClientId(), name, hours, monthly: emptyMonthly(), used: 0 };
     CLIENTS.push(targetClient);
   }
 

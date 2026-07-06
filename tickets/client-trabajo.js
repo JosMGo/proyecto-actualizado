@@ -211,18 +211,19 @@ function _sendWorkTicketEmail(t) {
 // ── TRABAJOS POR MES (antes "Horas por mes") ───────────────────────────────
 
 function renderWorkMonthlyChart(orders) {
-  const counts = [0, 0, 0, 0, 0, 0];
+  const counts = emptyMonthly();
   orders.forEach(o => {
     if (!o.fecha) return;
     const m = new Date(o.fecha + 'T00:00:00').getMonth();
-    if (m >= 0 && m <= 5) counts[m]++;
+    if (m >= 0 && m <= 11) counts[m]++;
   });
-  const max  = Math.max(...counts, 1);
-  const year = new Date().getFullYear();
-  const total = counts.reduce((a, b) => a + b, 0);
-  const avg   = (total / counts.length).toFixed(1);
+  const vm      = visibleMonthCount();
+  const visible = counts.slice(0, vm);               // solo Ene…mes actual
+  const max     = Math.max(...visible, 1);
+  const total   = visible.reduce((a, b) => a + b, 0);
+  const avg     = (total / visible.length).toFixed(1);
 
-  const bars = counts.map((n, i) => {
+  const bars = visible.map((n, i) => {
     const pct   = Math.round((n / max) * 100);
     const color = n >= max * 0.9 ? '#185FA5' : n >= max * 0.5 ? '#2c7fc9' : '#7aa9d6';
     return `
@@ -237,7 +238,7 @@ function renderWorkMonthlyChart(orders) {
     <div class="card">
       <div class="card-head">
         <span class="card-title"><i class="ti ti-chart-bar"></i> Trabajos por mes</span>
-        <span style="font-size:12px;color:var(--muted)">Ene – Jun ${year} &nbsp;·&nbsp; Promedio: <strong>${avg}</strong></span>
+        <span style="font-size:12px;color:var(--muted)">${visibleMonthsLabel()} &nbsp;·&nbsp; Promedio: <strong>${avg}</strong></span>
       </div>
       <div class="monthly-chart">${bars}</div>
     </div>`;
@@ -247,13 +248,14 @@ function renderWorkMonthlyChart(orders) {
 
 function renderOrdersByType(orders) {
   const year = new Date().getFullYear();
+  const vm   = visibleMonthCount();
   const catTotals  = {};
-  const catByMonth = Array.from({ length: 6 }, () => ({}));
+  const catByMonth = Array.from({ length: 12 }, () => ({}));
 
   orders.forEach(o => {
     if (!o.fecha) return;
     const m = new Date(o.fecha + 'T00:00:00').getMonth();
-    if (m < 0 || m > 5) return;
+    if (m < 0 || m > 11) return;
     const cat = o.categoria || 'Otro';
     catTotals[cat] = (catTotals[cat] || 0) + 1;
     catByMonth[m][cat] = (catByMonth[m][cat] || 0) + 1;
@@ -265,7 +267,7 @@ function renderOrdersByType(orders) {
   const rows = sorted.map(([cat, total]) => {
     const color = ORDER_CAT_COLORS[cat] || '#667085';
     const catPct = grandTotal > 0 ? Math.round((total / grandTotal) * 100) : 0;
-    const monthly = MONTHS.map((m, i) => {
+    const monthly = MONTHS.slice(0, vm).map((m, i) => {
       const n = catByMonth[i][cat] || 0;
       return `<td style="text-align:center;font-size:12px;color:${n > 0 ? color : 'var(--muted)'}">${n > 0 ? n : '—'}</td>`;
     }).join('');
@@ -284,7 +286,7 @@ function renderOrdersByType(orders) {
     ? `<div style="padding:16px;text-align:center;color:var(--muted);font-size:13px">Aún no hay trabajos realizados registrados.</div>`
     : `<div style="overflow-x:auto">
         <table class="tbl">
-          <thead><tr><th>Categoría</th>${MONTHS.map(m => `<th style="text-align:center">${m}</th>`).join('')}<th style="text-align:right">Total</th><th style="text-align:right">%</th></tr></thead>
+          <thead><tr><th>Categoría</th>${MONTHS.slice(0, vm).map(m => `<th style="text-align:center">${m}</th>`).join('')}<th style="text-align:right">Total</th><th style="text-align:right">%</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
       </div>`;
