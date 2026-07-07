@@ -1,0 +1,12 @@
+# Modo mantenimiento temporal — redirige todo excepto el banner y sus recursos.
+# Quitar/comentar este bloque al finalizar el mantenimiento.
+
+RewriteEngine On
+
+# Deja pasar el propio index.html, imágenes, css y robots.txt
+RewriteCond %{REQUEST_URI} ^/(index\.html|img/|robots\.txt|favicon)
+RewriteRule ^ - [L]
+
+# Todo lo demás va al banner
+RewriteCond %{REQUEST_URI} !^/index\.html$
+RewriteRule ^ /index.html [L,R=302]

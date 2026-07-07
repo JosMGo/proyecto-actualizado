@@ -6,18 +6,16 @@
   <title>SIRT — Redes y Telecomunicaciones</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
-  <link rel="stylesheet" href="sirt.css" />
 
-  <!-- ── SEO ───────────────────────────────────────────────────────────────
-       Reemplaza https://www.tudominio.com por tu dominio real (búsqueda y
-       reemplazo en todas las páginas de /sirt). -->
+  <!-- ── SEO (en pausa mientras dura el mantenimiento) ──────────────────────
+       Se conservan title/description/OG idénticos al sitio original para
+       que, al reactivar la indexación, Google no vea un cambio brusco.
+       Reemplaza https://www.tudominio.com por tu dominio real. -->
   <meta name="description" content="SIRT — Redes y telecomunicaciones en Bolivia. Conectividad, videovigilancia, ciberseguridad y soluciones TI para empresas. Partners oficiales de Hikvision, MikroTik y Ubiquiti." />
   <link rel="canonical" href="https://www.tudominio.com/index.html" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" type="image/jpeg" href="img/LOGO.jpeg" />
   <meta name="theme-color" content="#185FA5" />
-  <!-- Open Graph (Facebook / WhatsApp) -->
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="es_BO" />
   <meta property="og:site_name" content="SIRT" />
@@ -25,296 +23,64 @@
   <meta property="og:description" content="Conectividad, videovigilancia y soluciones TI para empresas en Bolivia. Partners oficiales de Hikvision, MikroTik y Ubiquiti." />
   <meta property="og:url" content="https://www.tudominio.com/index.html" />
   <meta property="og:image" content="https://www.tudominio.com/img/LOGO.jpeg" />
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="SIRT — Redes y Telecomunicaciones" />
-  <meta name="twitter:description" content="Conectividad, videovigilancia y soluciones TI para empresas en Bolivia." />
-  <meta name="twitter:image" content="https://www.tudominio.com/img/LOGO.jpeg" />
 
-  <!-- Datos estructurados: negocio local (ayuda en búsquedas y Google Maps) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "SIRT",
-    "description": "Redes, telecomunicaciones y seguridad electrónica para empresas en Bolivia.",
-    "url": "https://www.tudominio.com",
-    "logo": "https://www.tudominio.com/img/LOGO.jpeg",
-    "image": "https://www.tudominio.com/img/LOGO.jpeg",
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "BO"
-    },
-    "areaServed": "BO",
-    "knowsAbout": ["Redes", "Telecomunicaciones", "Videovigilancia", "Ciberseguridad", "Hikvision", "MikroTik", "Ubiquiti"]
-  }
-  </script>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #0b1220;
+      color: #f2f5fa;
+      text-align: center;
+      padding: 24px;
+    }
+    .card {
+      max-width: 480px;
+    }
+    .logo {
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 24px;
+      box-shadow: 0 0 0 4px rgba(24,95,165,0.35);
+    }
+    h1 {
+      font-size: 1.6rem;
+      margin: 0 0 12px;
+      font-weight: 700;
+    }
+    p {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #b8c2d6;
+      margin: 0 0 8px;
+    }
+    .badge {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: rgba(24,95,165,0.15);
+      color: #6fb3ff;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+  </style>
 </head>
 <body>
-
-<header class="navbar">
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img src="img/LOGO.jpeg" alt="SIRT Logo" style="height:42px; width:42px; object-fit:cover; border-radius:50%;" />
-    </a>
-    <button class="nav-toggle" id="nav-toggle"><i class="ti ti-menu-2"></i></button>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="index.html" class="active">Inicio</a></li>
-      <li><a href="nosotros.html">Nosotros</a></li>
-      <li><a href="servicios.html">Servicios</a></li>
-      <li><a href="productos.html">Productos</a></li>
-      <li><a href="clientes.html">Clientes</a></li>
-    </ul>
-    <div class="nav-cta">
-      <a href="soporte.html" class="btn-soporte"><i class="ti ti-ticket"></i> Soporte TI</a>
-      <a href="contacto.html" class="btn-contacto">Contacto <i class="ti ti-arrow-right"></i></a>
-    </div>
+  <div class="card">
+    <img class="logo" src="img/LOGO.jpeg" alt="SIRT Logo" />
+    <h1>Estamos actualizando nuestro sitio</h1>
+    <p>Muy pronto volveremos con una experiencia renovada.</p>
+    <p>Para consultas urgentes, escríbenos a <a href="mailto:info@sirtsc.com" style="color:#6fb3ff;">info@sirtsc.com</a>.</p>
+    <span class="badge">Vuelve pronto</span>
   </div>
-</header>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <span class="hero-tag"><i class="ti ti-map-pin"></i> Redes & amp; Telecomunicaciones · Bolivia</span>
-    <h1>Infraestructura que <span class="grad">impulsa tu negocio.</span></h1>
-    <p class="hero-sub">Conectividad, seguridad y soluciones TI para empresas que no se detienen. Partners oficiales de Hikvision, MikroTik, Ubiquiti y más.</p>
-    <div class="hero-btns">
-      <a href="servicios.html" class="btn-primary">Ver servicios →</a>
-      <a href="soporte.html" class="btn-outline">Abrir ticket</a>
-    </div>
-  </div>
-  <div class="hero-visual">
-    <div class="hero-img">
-      <img src="img/server.svg" alt="Infraestructura de servidores SIRT" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"/>
-    </div>
-    <div class="float-card">
-      <div class="float-dot"></div>
-      <div>
-        <div class="float-text">100+ Clientes activos</div>
-        <div class="float-sub">10 años de trayectoria</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-num">100+</div>
-    <div class="stat-lbl">Clientes</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">10+</div>
-    <div class="stat-lbl">Años</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">5</div>
-    <div class="stat-lbl">Servicios</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-num">24/7</div>
-    <div class="stat-lbl">Soporte</div>
-  </div>
-</div>
-
-<!-- SERVICES (3 cards preview) -->
-<section class="section" id="servicios">
-  <div class="container">
-    <div class="sec-head">
-      <span class="sec-label"><i class="ti ti-settings"></i> Lo que hacemos</span>
-      <h2 class="sec-title">Nuestros Servicios</h2>
-      <p class="sec-sub">Ofrecemos soluciones integrales de infraestructura tecnológica para empresas en Santa Cruz y toda Bolivia.</p>
-    </div>
-    <div class="services-grid">
-      <div class="service-card">
-        <div class="sc-icon"><i class="ti ti-plug"></i></div>
-        <div class="sc-title">Cableado Estructurado</div>
-        <p class="sc-desc">Diseño e instalación de redes físicas de alta calidad para oficinas, edificios e industrias, garantizando rendimiento y durabilidad.</p>
-        <ul class="sc-features">
-          <li><span class="dot-feat"></span> Par trenzado de cobre</li>
-          <li><span class="dot-feat"></span> Fibra óptica</li>
-          <li><span class="dot-feat"></span> Certificación de canales</li>
-        </ul>
-        <a href="https://wa.me/59170297903?text=Hola,%20me%20interesa%20solicitar%20una%20cotizaci%C3%B3n%20para%20Cableado%20Estructurado." class="sc-link" target="_blank"><i class="ti ti-brand-whatsapp"></i> Solicitar cotización</a>
-      </div>
-      <div class="service-card">
-        <div class="sc-icon"><i class="ti ti-shield-lock"></i></div>
-        <div class="sc-title">Sistemas de Seguridad</div>
-        <p class="sc-desc">Instalación y configuración de sistemas de videovigilancia, control de acceso y alarmas para proteger tu empresa.</p>
-        <ul class="sc-features">
-          <li><span class="dot-feat"></span> Cámaras IP Hikvision</li>
-          <li><span class="dot-feat"></span> DVR/NVR</li>
-          <li><span class="dot-feat"></span> Acceso remoto</li>
-        </ul>
-        <a href="https://wa.me/59170297903?text=Hola,%20me%20interesa%20solicitar%20una%20cotizaci%C3%B3n%20para%20Sistemas%20de%20Seguridad." class="sc-link" target="_blank"><i class="ti ti-brand-whatsapp"></i> Solicitar cotización</a>
-      </div>
-      <div class="service-card">
-        <div class="sc-icon"><i class="ti ti-cpu"></i></div>
-        <div class="sc-title">Soluciones TI</div>
-        <p class="sc-desc">Implementación y gestión de infraestructura tecnológica, servidores, virtualización y soporte técnico especializado.</p>
-        <ul class="sc-features">
-          <li><span class="dot-feat"></span> Soporte técnico</li>
-          <li><span class="dot-feat"></span> Instalación de software</li>
-          <li><span class="dot-feat"></span> Mantenimiento preventivo</li>
-        </ul>
-        <a href="https://wa.me/59170297903?text=Hola,%20me%20interesa%20solicitar%20una%20cotizaci%C3%B3n%20para%20Soluciones%20TI." class="sc-link" target="_blank"><i class="ti ti-brand-whatsapp"></i> Solicitar cotización</a>
-      </div>
-    </div>
-    <div style="text-align:center; margin-top:36px;">
-      <a href="servicios.html" class="btn-outline">Ver todos los servicios →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT TEASER -->
-<section class="section section-dark">
-  <div class="container">
-    <div class="about-grid">
-      <div class="about-img">
-        <img src="img/team.svg" alt="Equipo SIRT" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;"/>
-      </div>
-      <div>
-        <span class="sec-label"><i class="ti ti-info-circle"></i> Quiénes somos</span>
-        <h2 class="sec-title">Más de 10 años conectando Bolivia</h2>
-        <p class="sec-sub">Somos una empresa boliviana especializada en redes y telecomunicaciones, comprometida con la excelencia técnica y la satisfacción del cliente.</p>
-        <ul class="check-list">
-          <li><span class="check-dot"><i class="ti ti-check" style="font-size:10px;"></i></span> Partners oficiales certificados por las marcas líderes</li>
-          <li><span class="check-dot"><i class="ti ti-check" style="font-size:10px;"></i></span> Ingenieros especializados con amplia experiencia de campo</li>
-          <li><span class="check-dot"><i class="ti ti-check" style="font-size:10px;"></i></span> Soporte técnico 24/7 para nuestros clientes activos</li>
-          <li><span class="check-dot"><i class="ti ti-check" style="font-size:10px;"></i></span> Más de 200 proyectos exitosos en Bolivia</li>
-        </ul>
-        <a href="nosotros.html" class="btn-primary">Conoce más →</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CERTIFICATIONS CAROUSEL -->
-<section class="section" style="text-align:center;">
-  <div class="container">
-    <div class="sec-head center">
-      <span class="sec-label"><i class="ti ti-certificate"></i> Partners oficiales</span>
-      <h2 class="sec-title">Certificaciones y Partners</h2>
-      <p class="sec-sub">Trabajamos con las marcas tecnológicas más reconocidas a nivel mundial para garantizar la mejor calidad.</p>
-    </div>
-  </div>
-
-  <!-- Carrusel sin container para que ocupe todo el ancho -->
-  <div class="carousel-outer">
-    <div class="carousel-track">
-      <!-- Set 1 -->
-      <div class="logo-card lc-hikvision"></div>
-      <div class="logo-card lc-mikrotik"></div>
-      <div class="logo-card lc-siemon"></div>
-      <div class="logo-card lc-ubiquiti"></div>
-      <div class="logo-card lc-veeam"></div>
-      <div class="logo-card lc-vmware"></div>
-      <div class="logo-card lc-cisco"></div>
-      <div class="logo-card lc-dell"></div>
-      <div class="logo-card lc-dahua"></div>
-      <div class="logo-card lc-commax"></div>
-      <div class="logo-card lc-dimax"></div>
-      <!-- Set 2 — duplicado para el loop infinito -->
-      <div class="logo-card lc-hikvision"></div>
-      <div class="logo-card lc-mikrotik"></div>
-      <div class="logo-card lc-siemon"></div>
-      <div class="logo-card lc-ubiquiti"></div>
-      <div class="logo-card lc-veeam"></div>
-      <div class="logo-card lc-vmware"></div>
-      <div class="logo-card lc-cisco"></div>
-      <div class="logo-card lc-dell"></div>
-      <div class="logo-card lc-dahua"></div>
-      <div class="logo-card lc-commax"></div>
-      <div class="logo-card lc-dimax"></div>
-    </div>
-  </div>
-</section>
-
-<!-- CLIENTS TEASER -->
-<section class="section section-dark" style="text-align:center;">
-  <div class="container">
-    <div class="sec-head center">
-      <span class="sec-label"><i class="ti ti-building-community"></i> Empresas que confían en nosotros</span>
-      <h2 class="sec-title">Nuestros Clientes</h2>
-      <p class="sec-sub">Desde pequeñas empresas hasta grandes corporaciones, brindamos soluciones adaptadas a cada necesidad.</p>
-    </div>
-    <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-bottom:36px;">
-      <span style="background:var(--card); border:1px solid var(--border); border-radius:999px; padding:10px 24px; font-size:14px; font-weight:700; color:var(--gray);">DVA</span>
-      <span style="background:var(--card); border:1px solid var(--border); border-radius:999px; padding:10px 24px; font-size:14px; font-weight:700; color:var(--gray);">GoMax</span>
-      <span style="background:var(--card); border:1px solid var(--border); border-radius:999px; padding:10px 24px; font-size:14px; font-weight:700; color:var(--gray);">IOL</span>
-      <span style="background:var(--card); border:1px solid var(--border); border-radius:999px; padding:10px 24px; font-size:14px; font-weight:700; color:var(--gray);">CBN</span>
-      <span style="background:var(--card); border:1px solid var(--border); border-radius:999px; padding:10px 24px; font-size:14px; font-weight:700; color:var(--gray);">NovaGro</span>
-    </div>
-    <a href="clientes.html" class="btn-outline">Ver todos los clientes →</a>
-  </div>
-</section>
-
-<!-- CTA -->
-<section class="section">
-  <div class="container">
-    <div class="cta-section">
-      <h2>¿Listo para modernizar tu infraestructura?</h2>
-      <p>Contáctanos hoy y recibe una consultoría gratuita. Nuestros ingenieros evaluarán tus necesidades y diseñarán la mejor solución.</p>
-      <div class="cta-btns">
-        <a href="https://wa.me/59170297903" class="btn-primary" target="_blank"><i class="ti ti-brand-whatsapp"></i> WhatsApp</a>
-        <a href="mailto:info@sirtsc.com" class="btn-outline"><i class="ti ti-mail"></i> info@sirtsc.com</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-col">
-        <a href="index.html" class="nav-logo" style="margin-bottom:4px">
-          <img src="img/LOGO.jpeg" alt="SIRT Logo" style="height:42px; width:42px; object-fit:cover; border-radius:50%;" />
-        </a>
-        <p class="footer-brand-desc">Redes y Telecomunicaciones. Soluciones de conectividad e infraestructura tecnológica en Bolivia.</p>
-        <div class="social-links">
-          <a href="https://facebook.com/SirtBoliviasc" class="social-btn" target="_blank"><i class="ti ti-brand-facebook"></i></a>
-          <a href="https://instagram.com/sirtbosc" class="social-btn" target="_blank"><i class="ti ti-brand-instagram"></i></a>
-          <a href="https://wa.me/59170297903" class="social-btn" target="_blank"><i class="ti ti-brand-whatsapp"></i></a>
-        </div>
-      </div>
-      <div class="footer-col">
-        <h4>Navegación</h4>
-        <a href="index.html">Inicio</a>
-        <a href="nosotros.html">Nosotros</a>
-        <a href="servicios.html">Servicios</a>
-        <a href="productos.html">Productos</a>
-        <a href="clientes.html">Clientes</a>
-        <a href="soporte.html">Soporte IT</a>
-        <a href="contacto.html">Contacto</a>
-      </div>
-      <div class="footer-col">
-        <h4>Servicios</h4>
-        <a href="servicios.html">Cableado Estructurado</a>
-        <a href="servicios.html">Sistemas de Seguridad</a>
-        <a href="servicios.html">Soluciones TI</a>
-        <a href="servicios.html">Enlace Inalámbrico</a>
-        <a href="servicios.html">Centros de Datos</a>
-        <a href="soporte.html">Soporte IT</a>
-      </div>
-      <div class="footer-col">
-        <h4>Contacto</h4>
-        <p><i class="ti ti-map-pin"></i> Radial 17½ / 5to Anillo<br>Jardín Latino, Santa Cruz</p>
-        <a href="tel:79822006"><i class="ti ti-phone"></i> 79822006</a>
-        <a href="https://wa.me/59170297903"><i class="ti ti-brand-whatsapp"></i> 70297903</a>
-        <a href="mailto:info@sirtsc.com"><i class="ti ti-mail"></i> info@sirtsc.com</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <span>© 2026 SIRT — Redes y Telecomunicaciones. Todos los derechos reservados.</span>
-      <span>Santa Cruz, Bolivia</span>
-    </div>
-  </div>
-</footer>
-
-<script>
-  document.getElementById('nav-toggle').addEventListener('click', function() {
-    document.getElementById('nav-links').classList.toggle('open');
-  });
-</script>
 </body>
 </html>

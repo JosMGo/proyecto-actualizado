@@ -1,11 +1,8 @@
-# SIRT — robots.txt del sitio público
-# Reemplaza www.tudominio.com por tu dominio real.
+# SIRT — robots.txt (sitio en mantenimiento temporal)
+# Al terminar el mantenimiento, restaurar la versión de la rama "desarrollo".
 
 User-agent: *
-Allow: /
+Disallow: /
 
-# La aplicación de tickets no debe indexarse (datos privados de clientes).
-# Aplica solo si la sirves como subcarpeta /tickets en este mismo dominio.
-Disallow: /tickets/
-
-Sitemap: https://www.tudominio.com/sitemap.xml
+# Sitemap desactivado mientras el sitio está en mantenimiento:
+# Sitemap: https://www.tudominio.com/sitemap.xml
