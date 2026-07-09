@@ -58,8 +58,17 @@ function setAuth(data) {
   sessionStorage.setItem(AUTH_KEY, JSON.stringify(data));
 }
 
+function requireAuth(expectedRole, redirectUrl) {
+  const auth = getAuth();
+  if (!auth || auth.role !== expectedRole) {
+    window.location.replace(redirectUrl);
+    return null;
+  }
+  return auth;
+}
+
 async function logout() {
-  if (typeof _sb !== 'undefined') await _sb.auth.signOut();
+  if (typeof _sb !== 'undefined') try { await _sb.auth.signOut(); } catch (e) { console.warn('logout:', e); }
   sessionStorage.removeItem(AUTH_KEY);
   const isAdmin = window.location.href.includes('admin');
   window.location.href = isAdmin ? 'login-admin.html' : 'login-client.html';

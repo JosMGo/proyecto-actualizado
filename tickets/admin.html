@@ -49,19 +49,15 @@
 <script src="admin-trabajo.js"></script>
 <script>
   async function ensureAdminAccess() {
-    let auth = getAuth();
-    if (!auth || auth.role !== 'admin') {
-      // Fallback: verificar sesión activa de Supabase
-      const { data } = await _sb.auth.getSession();
-      if (data.session) {
-        auth = { role: 'admin', email: data.session.user.email };
-        setAuth(auth);
-      } else {
-        window.location.replace('login-admin.html');
-        return;
-      }
+    let auth = requireAuth('admin', 'login-admin.html');
+    if (!auth) return;
+
+    const { data } = await _sb.auth.getSession();
+    if (!data.session) {
+      window.location.replace('login-admin.html');
+      return;
     }
-    // Mostrar email en topbar y hacer visible la app
+
     const nameEl = document.getElementById('topbar-admin-name');
     if (nameEl && auth.email) nameEl.textContent = auth.email.split('@')[0];
     document.getElementById('app').style.visibility = 'visible';

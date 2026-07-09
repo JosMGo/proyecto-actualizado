@@ -2,6 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(dir \"c:\\\\Users\\\\malva\\\\OneDrive\\\\Desktop\\\\proyecto actualizado\\\\sirt\" /s /b)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\malva\\Downloads"
     ]
   }
 }

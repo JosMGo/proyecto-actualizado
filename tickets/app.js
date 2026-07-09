@@ -8,9 +8,9 @@ function nextUserId() {
 }
 
 async function dbUpsertUser(u) {
-  const { error } = await _sb.from('client_users').upsert({
-    id: u.id, name: u.name, username: u.user, pass: u.pass, client_id: u.client
-  });
+  const payload = { id: u.id, name: u.name, username: u.user, client_id: u.client };
+  if (typeof u.pass !== 'undefined' && u.pass !== null && u.pass !== '') payload.pass = u.pass;
+  const { error } = await _sb.from('client_users').upsert(payload);
   if (error) console.error('dbUpsertUser:', error);
 }
 
@@ -181,7 +181,7 @@ async function loadData() {
   }
 
   if (ur.data) users = ur.data.map(u => ({
-    id: u.id, name: u.name, user: u.username, pass: u.pass, client: u.client_id
+    id: u.id, name: u.name, user: u.username, client: u.client_id
   }));
 
   const tr2 = await _sb.from('techs').select('*').order('name');
@@ -249,7 +249,7 @@ async function loadUsers() {
   const { data, error } = await _sb.from('client_users').select('*');
   if (error) { console.error('loadUsers:', error); return; }
   if (data) users = data.map(u => ({
-    id: u.id, name: u.name, user: u.username, pass: u.pass, client: u.client_id
+    id: u.id, name: u.name, user: u.username, client: u.client_id
   }));
 }
 

@@ -61,6 +61,8 @@
     <a href="index.html" class="login-back">← Volver al inicio</a>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
   <script src="auth.js"></script>
   <script>
     // Redirigir de inmediato si ya está autenticado (sin esperar Supabase)
@@ -71,12 +73,32 @@
       }
     })();
   </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase.js"></script>
-  <script src="app.js"></script>
-  <script src="work-data.js"></script>
   <script>
     const PORTAL = 'client';
+
+    async function verifyClientCredentials(username, password) {
+      const normalizedUsername = String(username || '').trim().toLowerCase();
+      const normalizedPassword = String(password || '');
+
+      if (!normalizedUsername || !normalizedPassword) return null;
+
+      const [hoursRes, workRes] = await Promise.all([
+        _sb.from('client_users').select('*').ilike('username', normalizedUsername).maybeSingle().catch(() => ({ data: null, error: null })),
+        _sb.from('work_users').select('*').ilike('username', normalizedUsername).maybeSingle().catch(() => ({ data: null, error: null }))
+      ]);
+
+      const record = hoursRes.data || workRes.data;
+      const portal = hoursRes.data ? 'horas' : workRes.data ? 'trabajo' : null;
+
+      if (!record || String(record.pass ?? '') !== normalizedPassword) return null;
+
+      return {
+        portal,
+        clientId: record.client_id ?? null,
+        userId: record.id ?? null,
+        userName: record.name ?? null
+      };
+    }
 
     function togglePwd() {
       const inp  = document.getElementById('login-pass');
@@ -85,35 +107,37 @@
       icon.className = inp.type === 'password' ? 'ti ti-eye' : 'ti ti-eye-off';
     }
 
-    function doLogin() {
+    async function doLogin() {
       const locked = checkLock(PORTAL);
       if (locked) { showLockBanner(locked); return; }
 
       const username = document.getElementById('login-user').value.trim();
       const pass     = document.getElementById('login-pass').value;
 
-      // 1) Empresas por HORAS (portal cliente actual)
-      const found = users.find(u => u.user === username && u.pass === pass);
-      if (found) {
-        resetLock(PORTAL);
-        setAuth({ role: 'client', portal: 'horas', clientId: found.client, userId: found.id, userName: found.name });
-        window.location.replace('client.html');
-        return;
-      }
+      const btn = document.getElementById('login-btn');
+      btn.disabled = true;
+      btn.innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:2px;display:inline-block;vertical-align:-2px;margin-right:6px"></span>Cargando...';
 
-      // 2) Empresas por TRABAJO (nuevo portal) — enrutamiento automático
-      const foundWork = (typeof WORK_USERS !== 'undefined')
-        ? WORK_USERS.find(u => u.user === username && u.pass === pass)
-        : null;
-      if (foundWork) {
-        resetLock(PORTAL);
-        setAuth({ role: 'client', portal: 'trabajo', clientId: foundWork.clientId, userId: foundWork.id, userName: foundWork.name });
-        window.location.replace('client-trabajo.html');
-        return;
-      }
+      try {
+        const result = await verifyClientCredentials(username, pass);
 
-      const d = registerFail(PORTAL);
-      showFailure(d);
+        if (result) {
+          resetLock(PORTAL);
+          setAuth({ role: 'client', portal: result.portal, clientId: result.clientId, userId: result.userId, userName: result.userName });
+          window.location.replace(result.portal === 'trabajo' ? 'client-trabajo.html' : 'client.html');
+          return;
+        }
+
+        const d = registerFail(PORTAL);
+        showFailure(d);
+      } catch (e) {
+        console.error('client login error:', e);
+        const d = registerFail(PORTAL);
+        showFailure(d);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="ti ti-login"></i> Ingresar';
+      }
     }
 
     function showFailure(d) {
@@ -158,19 +182,10 @@
       _iv = setInterval(tick, 1000);
     }
 
-    // Cargar usuarios desde Supabase y luego verificar bloqueo
-    document.getElementById('login-btn').disabled = true;
-    document.getElementById('login-btn').innerHTML = '<span class="spinner" style="width:14px;height:14px;border-width:2px;display:inline-block;vertical-align:-2px;margin-right:6px"></span>Cargando...';
-
-    Promise.all([
-      loadUsers(),
-      (typeof dbLoadWorkUsers === 'function' ? dbLoadWorkUsers() : Promise.resolve())
-    ]).then(() => {
-      document.getElementById('login-btn').disabled = false;
-      document.getElementById('login-btn').innerHTML = '<i class="ti ti-login"></i> Ingresar';
-      const _initLock = checkLock(PORTAL);
-      if (_initLock) showLockBanner(_initLock);
-    });
+    document.getElementById('login-btn').disabled = false;
+    document.getElementById('login-btn').innerHTML = '<i class="ti ti-login"></i> Ingresar';
+    const _initLock = checkLock(PORTAL);
+    if (_initLock) showLockBanner(_initLock);
   </script>
 
 </body>
