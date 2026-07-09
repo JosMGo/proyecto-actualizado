@@ -81,10 +81,10 @@ let WORK_TICKETS = [
 // pass: credenciales demo para probar el login del portal por trabajo.
 
 let WORK_USERS = [
-  { id: 1, name: 'Ana Ruiz',    user: 'ana.technova',    clientId: 1 },
-  { id: 2, name: 'Carlos Vega', user: 'carlos.technova', clientId: 1 },
-  { id: 3, name: 'Luis Gómez',  user: 'luis.construmax', clientId: 2 },
-  { id: 4, name: 'María Soto',  user: 'maria.greenfarm', clientId: 3 }
+  { id: 1, name: 'Ana Ruiz',    user: 'ana.technova',    pass: '1234', clientId: 1 },
+  { id: 2, name: 'Carlos Vega', user: 'carlos.technova', pass: '1234', clientId: 1 },
+  { id: 3, name: 'Luis Gómez',  user: 'luis.construmax', pass: '1234', clientId: 2 },
+  { id: 4, name: 'María Soto',  user: 'maria.greenfarm', pass: '1234', clientId: 3 }
 ];
 
 // ── VISITAS / ACTIVIDADES PROGRAMADAS POR TRABAJO ──────────────────────────
@@ -214,7 +214,7 @@ function orderTypeBadge(tipo) {
 function _mapWorkClient(r) { return { id: r.id, name: r.name, sector: r.sector || '', contact: r.contact || '' }; }
 function _mapWork(r)       { return { id: r.id, name: r.name, clientId: r.client_id, status: r.status || 'activo', progress: Number(r.progress) || 0, start: r.start_date || '', end: r.end_date || '', desc: r.description || '' }; }
 function _mapWorkTicket(r) { return { id: r.id, title: r.title, workId: r.work_id, clientId: r.client_id, status: r.status, prio: r.prio, tech: r.tech || 'Sin asignar', cat: r.cat || '', desc: r.description || '', createdAt: r.created_at || null }; }
-function _mapWorkUser(r)   { return { id: r.id, name: r.name, user: r.username, clientId: r.client_id }; }
+function _mapWorkUser(r)   { return { id: r.id, name: r.name, user: r.username, pass: r.pass, clientId: r.client_id }; }
 function _mapWorkEvent(r)  { return { id: r.id, title: r.title, date: r.date, time: r.time, type: r.type, workId: r.work_id, clientId: r.client_id, tech: r.tech || 'Sin asignar', desc: r.description || '' }; }
 function _mapWorkOrder(r)  {
   return {
@@ -283,9 +283,7 @@ async function dbUpsertWorkTicket(t) {
 }
 
 async function dbUpsertWorkUser(u) {
-  const payload = { id: u.id, name: u.name, username: u.user, client_id: u.clientId };
-  if (typeof u.pass !== 'undefined' && u.pass !== null && u.pass !== '') payload.pass = u.pass;
-  const { error } = await _sb.from('work_users').upsert(payload);
+  const { error } = await _sb.from('work_users').upsert({ id: u.id, name: u.name, username: u.user, pass: u.pass, client_id: u.clientId });
   if (error) console.error('dbUpsertWorkUser:', error.message);
 }
 async function dbDeleteWorkUser(id) {

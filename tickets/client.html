@@ -15,9 +15,7 @@
     try {
       const a = JSON.parse(sessionStorage.getItem('soporte_auth'));
       if (!a || a.role !== 'client') window.location.replace('login-client.html');
-    } catch (e) {
-      window.location.replace('login-client.html');
-    }
+    } catch(e) { window.location.replace('login-client.html'); }
   </script>
 </head>
 <body>
