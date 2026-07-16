@@ -685,12 +685,16 @@ async function saveUser(userId) {
       users[idx].name   = name;
       users[idx].user   = user;
       users[idx].client = client;
-      if (pass) users[idx].pass = pass;
+      if (pass) {
+        const hashedPass = await hashPassword(pass);
+        users[idx].pass = hashedPass;
+      }
       targetUser = users[idx];
     }
   } else {
     if (!pass) { alert('Ingresa una contraseña.'); return; }
-    targetUser = { id: nextUserId(), name, user, pass, client };
+    const hashedPass = await hashPassword(pass);
+    targetUser = { id: nextUserId(), name, user, pass: hashedPass, client };
     users.push(targetUser);
   }
 

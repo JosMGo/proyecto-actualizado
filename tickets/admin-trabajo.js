@@ -798,7 +798,7 @@ function openWorkUserForm(userId) {
   `);
 }
 
-function saveWorkUser(userId) {
+async function saveWorkUser(userId) {
   const name = document.getElementById('wu-name').value.trim();
   const user = document.getElementById('wu-user').value.trim().toLowerCase();
   const pass = document.getElementById('wu-pass').value;
@@ -814,12 +814,16 @@ function saveWorkUser(userId) {
     const idx = WORK_USERS.findIndex(u => u.id === userId);
     if (idx !== -1) {
       WORK_USERS[idx] = { ...WORK_USERS[idx], name, user, clientId };
-      if (pass) WORK_USERS[idx].pass = pass;
+      if (pass) {
+        const hashedPass = await hashPassword(pass);
+        WORK_USERS[idx].pass = hashedPass;
+      }
       target = WORK_USERS[idx];
     }
   } else {
     if (!pass) { alert('Ingresa una contraseña.'); return; }
-    target = { id: nextWorkUserId(), name, user, pass, clientId };
+    const hashedPass = await hashPassword(pass);
+    target = { id: nextWorkUserId(), name, user, pass: hashedPass, clientId };
     WORK_USERS.push(target);
   }
   closeModal();

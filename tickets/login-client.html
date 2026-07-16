@@ -71,10 +71,12 @@
       }
     })();
   </script>
+  <script src="https://cdn.jsdelivr.net/npm/bcryptjs@2.4.3/dist/bcrypt.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js"></script>
   <script src="app.js"></script>
   <script src="work-data.js"></script>
+  <script src="password-utils.js"></script>
   <script>
     const PORTAL = 'client';
 
@@ -85,7 +87,7 @@
       icon.className = inp.type === 'password' ? 'ti ti-eye' : 'ti ti-eye-off';
     }
 
-    function doLogin() {
+    async function doLogin() {
       const locked = checkLock(PORTAL);
       if (locked) { showLockBanner(locked); return; }
 
@@ -93,23 +95,35 @@
       const pass     = document.getElementById('login-pass').value;
 
       // 1) Empresas por HORAS (portal cliente actual)
-      const found = users.find(u => u.user === username && u.pass === pass);
+      const found = users.find(u => u.user === username);
       if (found) {
-        resetLock(PORTAL);
-        setAuth({ role: 'client', portal: 'horas', clientId: found.client, userId: found.id, userName: found.name });
-        window.location.replace('client.html');
-        return;
+        const passwordMatch = isPasswordHashed(found.pass)
+          ? await verifyPassword(pass, found.pass)
+          : found.pass === pass;
+
+        if (passwordMatch) {
+          resetLock(PORTAL);
+          setAuth({ role: 'client', portal: 'horas', clientId: found.client, userId: found.id, userName: found.name });
+          window.location.replace('client.html');
+          return;
+        }
       }
 
       // 2) Empresas por TRABAJO (nuevo portal) — enrutamiento automático
       const foundWork = (typeof WORK_USERS !== 'undefined')
-        ? WORK_USERS.find(u => u.user === username && u.pass === pass)
+        ? WORK_USERS.find(u => u.user === username)
         : null;
       if (foundWork) {
-        resetLock(PORTAL);
-        setAuth({ role: 'client', portal: 'trabajo', clientId: foundWork.clientId, userId: foundWork.id, userName: foundWork.name });
-        window.location.replace('client-trabajo.html');
-        return;
+        const passwordMatch = isPasswordHashed(foundWork.pass)
+          ? await verifyPassword(pass, foundWork.pass)
+          : foundWork.pass === pass;
+
+        if (passwordMatch) {
+          resetLock(PORTAL);
+          setAuth({ role: 'client', portal: 'trabajo', clientId: foundWork.clientId, userId: foundWork.id, userName: foundWork.name });
+          window.location.replace('client-trabajo.html');
+          return;
+        }
       }
 
       const d = registerFail(PORTAL);

@@ -191,21 +191,20 @@ function submitWorkTicket() {
   _sendWorkTicketEmail(ticket);
 }
 
-// Misma notificación por correo que el portal por horas (EmailJS).
+// Misma notificación por correo que el portal por horas (SMTP Banahost).
 function _sendWorkTicketEmail(t) {
-  if (typeof emailjs === 'undefined') return;
   const auth    = getAuth();
   const empresa = workClientName(t.clientId);
   const prioMap = { low: 'Baja', medium: 'Media', high: 'Alta', critical: 'Crítica' };
 
-  emailjs.send('service_11zanls', 'template_pp6rjvy', {
+  sendTicketEmail({
     ticket_id:      t.id,
     ticket_titulo:  t.title,
     usuario_nombre: auth && auth.userName ? auth.userName : 'Usuario',
     empresa:        empresa,
     prioridad:      prioMap[t.prio] || t.prio,
     descripcion:    `[Trabajo: ${workName(t.workId)}] ${t.desc || 'Sin descripción'}`
-  }).catch(err => console.error('EmailJS error:', err));
+  });
 }
 
 // ── TRABAJOS POR MES (antes "Horas por mes") ───────────────────────────────

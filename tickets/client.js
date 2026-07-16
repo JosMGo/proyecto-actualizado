@@ -352,14 +352,14 @@ function _sendTicketEmail(t) {
   const empresa = CLIENTS[clientIdx()]?.name || '—';
   const prioMap = { alta: 'Alta', media: 'Media', baja: 'Baja' };
 
-  emailjs.send('service_11zanls', 'template_pp6rjvy', {
-    ticket_id:       t.id,
-    ticket_titulo:   t.title,
-    usuario_nombre:  auth?.userName || 'Usuario',
-    empresa:         empresa,
-    prioridad:       prioMap[t.prio] || t.prio,
-    descripcion:     t.desc || 'Sin descripción'
-  }).catch(err => console.error('EmailJS error:', err));
+  sendTicketEmail({
+    ticket_id:      t.id,
+    ticket_titulo:  t.title,
+    usuario_nombre: auth?.userName || 'Usuario',
+    empresa:        empresa,
+    prioridad:      prioMap[t.prio] || t.prio,
+    descripcion:    t.desc || 'Sin descripción'
+  });
 }
 
 // ── DETALLE TICKET ─────────────────────────────────────────────────────────
