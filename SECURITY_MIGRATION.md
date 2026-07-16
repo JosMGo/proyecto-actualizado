@@ -29,10 +29,18 @@ Las contraseñas viejas siguen funcionando (sin hashear) hasta que se editen.
 ## 📋 Paso a Paso: Migrar Contraseñas Existentes
 
 ### Opción 1: Manual en Admin (Recomendado)
-1. Ir a Dashboard Admin → Pestaña "Usuarios" (o "Empresa x" → "Miembros")
-2. Editar cada usuario
-3. Cambiar la contraseña y guardar
-4. ✅ La contraseña se hasheará automáticamente
+
+**Portal por horas** (`admin.html`):
+1. Dashboard Admin → pestaña **"Usuarios"** (barra: Tickets | Empresas | Horas | Técnicos | Usuarios | Calendario | Archivados | Reportes)
+2. Clic en el ícono ✏️ (editar) junto al usuario
+3. Escribir la nueva contraseña en el campo y guardar
+4. ✅ Se hashea automáticamente al guardar
+
+**Portal por trabajo**:
+1. Dashboard Admin → pestaña **"Empresas"** → botón **"Dashboard admin trabajo"** (arriba a la derecha)
+2. En el nuevo dashboard, pestaña **"Usuarios"** (barra: Tickets | Empresas | Técnicos | Usuarios | Calendario | Trabajos | Órdenes)
+3. Clic en ✏️ junto al usuario → escribir nueva contraseña → guardar
+4. ✅ Se hashea automáticamente al guardar
 
 ### Opción 2: Script SQL (Para hacer todo de una vez)
 
